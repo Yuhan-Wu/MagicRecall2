@@ -58,5 +58,13 @@
     <ClInclude Include="Globals.h">
       <Filter>Source\MagicRecall2</Filter>
     </ClInclude>
+    <ClInclude Include="Team.h">
+      <Filter>Source\MagicRecall2</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source\MagicRecall2</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

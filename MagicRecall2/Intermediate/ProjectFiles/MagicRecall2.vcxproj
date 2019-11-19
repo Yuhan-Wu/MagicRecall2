@@ -364,7 +364,13 @@
     <NMakeOutput>..\..\Binaries\HTML5\MagicRecall2-HTML5-Shipping.js</NMakeOutput>
   </PropertyGroup>
   <ItemGroup>
+    <ClCompile Include="Entity.cpp">
+      <DeploymentContent>true</DeploymentContent>
+    </ClCompile>
     <ClInclude Include="Globals.h">
+      <DeploymentContent>true</DeploymentContent>
+    </ClInclude>
+    <ClInclude Include="Team.h">
       <DeploymentContent>true</DeploymentContent>
     </ClInclude>
     <None Include="..\..\MagicRecall2.uproject" />
@@ -377,7 +383,9 @@
     <None Include="..\..\Config\DefaultInput.ini" />
     <None Include="..\..\Source\MagicRecall2\MagicRecall2.Build.cs" />
     <ClCompile Include="..\..\Source\MagicRecall2\MagicRecall2.cpp" />
-    <ClInclude Include="..\..\Source\MagicRecall2\MagicRecall2.h" />
+    <ClInclude Include="..\..\Source\MagicRecall2\MagicRecall2.h">
+      <DeploymentContent>false</DeploymentContent>
+    </ClInclude>
     <ClCompile Include="..\..\Source\MagicRecall2\MagicRecall2Character.cpp" />
     <ClInclude Include="..\..\Source\MagicRecall2\MagicRecall2Character.h" />
     <ClCompile Include="..\..\Source\MagicRecall2\MagicRecall2GameMode.cpp" />

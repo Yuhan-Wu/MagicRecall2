@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "4.22",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "MagicRecall2",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

@@ -1,6 +1,7 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
-
 #include "MagicRecall2Character.h"
+#include "Engine.h"
+#include "FireBall.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -74,6 +75,10 @@ void AMagicRecall2Character::SetupPlayerInputComponent(class UInputComponent* Pl
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AMagicRecall2Character::OnResetVR);
+
+	// Shoot fire balls
+	PlayerInputComponent->BindAction("Mahou", IE_Pressed, this, &AMagicRecall2Character::MahouCast);
+	PlayerInputComponent->BindAction("Mahou", IE_Released, this, &AMagicRecall2Character::MahouCastOff);
 }
 
 
@@ -130,5 +135,56 @@ void AMagicRecall2Character::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
+	}
+}
+
+/**
+*Magic Recall functions
+*/
+
+// Shoot (...) fire balls
+void AMagicRecall2Character::MahouCast() {
+	// shoot every 0.5 second
+	// GetWorld()->GetTimerManager().SetTimer(MahouTimer,this,&AMagicRecall2Character::Mahou,1.5f,true,1.5f);
+	Mahou();
+}
+
+void AMagicRecall2Character::MahouCastOff() {
+	GetWorld()->GetTimerManager().ClearTimer(MahouTimer);
+}
+
+void AMagicRecall2Character::Mahou() {
+	// Play animation, sound, whatever :)
+	
+	if (Fireballs)
+	{
+		// Get location & rotation
+		FVector WizardLocation;
+		FRotator WizardRotation;
+		GetActorEyesViewPoint(WizardLocation, WizardRotation);
+
+		// To world location
+		FVector MuzzleLocation = WizardLocation + FTransform(WizardRotation).TransformVector(MuzzleOffset);
+		FRotator MuzzleRotation = WizardRotation;
+		// Raise aiming point
+		MuzzleRotation.Pitch += 10.0f;
+		UWorld* World = GetWorld();
+		if (World)
+		{
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = Instigator;
+			
+			// TODO: Shoot multiple fireballs
+			AFireBall* Projectile = World->SpawnActor< AFireBall >( Fireballs, MuzzleLocation, MuzzleRotation, SpawnParams);
+			if (Projectile)
+			{
+				// Track
+				FVector LaunchDirection = MuzzleRotation.Vector();
+				Projectile->MahouInDirection(LaunchDirection);
+				Projectile->SetHome(this);
+				UE_LOG(LogTemp, Log, TEXT("Fire"));
+			}
+		}
 	}
 }

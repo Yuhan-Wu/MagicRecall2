@@ -29,6 +29,14 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+	// Offset from player to where fireballs are shot
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	FVector MuzzleOffset;
+
+	// Fireballs
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AFireBall> Fireballs;
+
 protected:
 
 	/** Resets HMD orientation in VR. */
@@ -63,10 +71,18 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
 
+	// Mahou timer
+	FTimerHandle MahouTimer;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	// Magic Recall functions
+	void MahouCast();
+	void MahouCastOff();
+	void Mahou();
 };
 

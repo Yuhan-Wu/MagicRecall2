@@ -32,13 +32,13 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void attack();
 
-	void setMoveTarget(UCharacterMovementComponent * i_moveTarget) { moveTarget = i_moveTarget; }
-	UCharacterMovementComponent * const getMoveTarget() { return moveTarget; }
+	void setMoveTarget(FVector i_moveTarget) { moveTarget = i_moveTarget; }
+	FVector const getMoveTarget() { return moveTarget; }
 
 	void setAttackTarget(UCharacterMovementComponent * i_attackTarget) { attackTarget = i_attackTarget; }
 	UCharacterMovementComponent * const getAttackTarget() { return attackTarget; }
 
 private:
-	UCharacterMovementComponent * moveTarget;
+	FVector moveTarget;
 	UCharacterMovementComponent * attackTarget;
 };

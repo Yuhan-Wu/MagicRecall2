@@ -16,6 +16,11 @@ AFireBall::AFireBall()
 	
 	RootComponent = CollisionComponent;
 
+	TotalDistance = 0;
+	bool isBack = false;
+	MaxDistance = 500;
+	Speed = 500;
+
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 	ProjectileMovementComponent->SetUpdatedComponent(CollisionComponent);
 	ProjectileMovementComponent->InitialSpeed = Speed;
@@ -25,9 +30,13 @@ AFireBall::AFireBall()
 	ProjectileMovementComponent->Bounciness = 0.3f;
 	ProjectileMovementComponent->ProjectileGravityScale = 0;
 
-	TotalDistance = 0;
-	bool isBack = false;
-	MaxDistance = 500;
+	
+}
+
+AFireBall::AFireBall(float total_distance,float speed) {
+	AFireBall();
+	MaxDistance = total_distance;
+	Speed = speed;
 }
 
 // Called when the game starts or when spawned
@@ -82,5 +91,16 @@ void AFireBall::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 		// UE_LOG(LogTemp, Log, TEXT("OVERLAP"));
 		Destroy();
 	}
+	// TODO: Whether it can be casted to a monster
+}
+
+void AFireBall::SetSpeed(float speed) {
+	Speed = speed;
+	ProjectileMovementComponent->InitialSpeed = Speed;
+	ProjectileMovementComponent->MaxSpeed = Speed;
+}
+
+void AFireBall::SetDistance(float distance) {
+	MaxDistance = distance;
 }
 

@@ -1,5 +1,6 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 #include "MagicRecall2Character.h"
+#include <vector>
 #include "Engine.h"
 #include "FireBall.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
@@ -43,6 +44,7 @@ AMagicRecall2Character::AMagicRecall2Character()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -167,7 +169,7 @@ void AMagicRecall2Character::Mahou() {
 		FVector MuzzleLocation = WizardLocation + FTransform(WizardRotation).TransformVector(MuzzleOffset);
 		FRotator MuzzleRotation = WizardRotation;
 		// Raise aiming point
-		MuzzleRotation.Pitch += 10.0f;
+		MuzzleRotation.Pitch += 30.0f;
 		UWorld* World = GetWorld();
 		if (World)
 		{
@@ -175,16 +177,36 @@ void AMagicRecall2Character::Mahou() {
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = Instigator;
 			
-			// TODO: Shoot multiple fireballs
-			AFireBall* Projectile = World->SpawnActor< AFireBall >( Fireballs, MuzzleLocation, MuzzleRotation, SpawnParams);
-			if (Projectile)
-			{
-				// Track
-				FVector LaunchDirection = MuzzleRotation.Vector();
-				Projectile->MahouInDirection(LaunchDirection);
-				Projectile->SetHome(this);
-				UE_LOG(LogTemp, Log, TEXT("Fire"));
+			for (auto i = 0; i < numOfFireballs; i++) {
+				AFireBall* Projectile = World->SpawnActor< AFireBall >(Fireballs, MuzzleLocation, MuzzleRotation, SpawnParams);
+				Projectile->SetDistance(DistanceLevel[level]);
+				Projectile->SetSpeed(SpeedLevel[level]);
+				if (Projectile)
+				{
+					// Track
+					FVector LaunchDirection = MuzzleRotation.Vector();
+					LaunchDirection = FVector(LaunchDirection.X, LaunchDirection.Y, 0);
+					LaunchDirection=LaunchDirection.RotateAngleAxis(Angles[i], FVector::UpVector);
+					Projectile->MahouInDirection(LaunchDirection);
+					Projectile->SetHome(this);
+					
+					UE_LOG(LogTemp, Log, TEXT("Born"));
+				}
 			}
 		}
 	}
+}
+
+int AMagicRecall2Character::PowerUp() {
+	if (level < DistanceLevel.size()) {
+		level++;
+	}
+	return level;
+}
+
+int AMagicRecall2Character::BackToMuggle() {
+	if (level > 0) {
+		level--;
+	}
+	return level;
 }

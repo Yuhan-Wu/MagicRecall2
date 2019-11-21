@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include <vector>
 #include "MagicRecall2Character.generated.h"
 
 UCLASS(config=Game)
@@ -74,6 +75,16 @@ protected:
 	// Mahou timer
 	FTimerHandle MahouTimer;
 
+	// Mahou direction
+	std::vector<float> Angles{ -60 , 0, 60};
+
+	// Power up
+	std::vector<float> DistanceLevel{500,800,1000};
+	std::vector<float> SpeedLevel{500,800,1000};
+	int level=0;
+	int numOfFireballs = 3;
+	float cosValue = 0.5f;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -84,5 +95,9 @@ public:
 	void MahouCast();
 	void MahouCastOff();
 	void Mahou();
+
+	// Functions related to power-ups
+	int PowerUp();
+	int BackToMuggle();
 };
 

@@ -54,8 +54,8 @@ void AEnemySpider::BeginPlay()
 // Called every frame
 void AEnemySpider::Tick(float DeltaTime)
 {
-	setMoveTarget(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
-	move_Implementation();
+	//setMoveTarget(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
+	//move_Implementation();
 	Super::Tick(DeltaTime);
 
 }
@@ -69,8 +69,8 @@ void AEnemySpider::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AEnemySpider::move_Implementation()
 {
-	GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, FString::Printf(TEXT("Debug Player Position: x: %f, y: %f"), getMoveTarget().X, getMoveTarget().Y));
-	SetActorLocation(getMoveTarget(), true);
+	//GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, FString::Printf(TEXT("Debug Player Position: x: %f, y: %f"), getMoveTarget().X, getMoveTarget().Y));
+	//SetActorLocation(getMoveTarget(), true);
 	//AddMovementInput(this->GetActorLocation() - getMoveTarget(), 100.f);
 	//ConsumeMovementInputVector();
 }
@@ -81,5 +81,6 @@ void AEnemySpider::receiveDamage_Implementation()
 
 void AEnemySpider::attack_Implementation()
 {
+	UE_LOG(LogTemp, Log, TEXT("%s is attacking"), *GetName());
 }
 

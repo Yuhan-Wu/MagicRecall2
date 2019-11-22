@@ -64,4 +64,14 @@
       <Filter>Source\MagicRecall2</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\MagicRecall2\Bonfire.h">
+      <Filter>Source\MagicRecall2</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\MagicRecall2\Bonfire.cpp">
+      <Filter>Source\MagicRecall2</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

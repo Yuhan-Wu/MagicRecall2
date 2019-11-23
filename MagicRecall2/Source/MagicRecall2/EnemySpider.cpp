@@ -73,6 +73,7 @@ void AEnemySpider::move_Implementation()
 	//SetActorLocation(getMoveTarget(), true);
 	//AddMovementInput(this->GetActorLocation() - getMoveTarget(), 100.f);
 	//ConsumeMovementInputVector();
+	UE_LOG(LogTemp, Log, TEXT("%s is moving"), *GetName());
 }
 
 void AEnemySpider::receiveDamage_Implementation()

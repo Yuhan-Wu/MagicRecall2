@@ -73,7 +73,7 @@ void AEnemySpider::move_Implementation()
 	//SetActorLocation(getMoveTarget(), true);
 	//AddMovementInput(this->GetActorLocation() - getMoveTarget(), 100.f);
 	//ConsumeMovementInputVector();
-	UE_LOG(LogTemp, Log, TEXT("%s is moving"), *GetName());
+	UE_LOG(LogTemp, Log, TEXT("%s is moving towards %s"), *GetName(), *getMoveTarget()->GetName());
 }
 
 void AEnemySpider::receiveDamage_Implementation()
@@ -82,6 +82,6 @@ void AEnemySpider::receiveDamage_Implementation()
 
 void AEnemySpider::attack_Implementation()
 {
-	UE_LOG(LogTemp, Log, TEXT("%s is attacking"), *GetName());
+	UE_LOG(LogTemp, Log, TEXT("%s is attacking %s"), *GetName(), *getAttackTarget()->GetName());
 }
 

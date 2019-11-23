@@ -22,7 +22,6 @@ private:
 
 public:
 	AEnemyAIController();
-
-private:
-	UBehaviorTree* m_pEnemyBehaviorTree;
+	UPROPERTY(EditAnywhere, Category = AI)
+		UBehaviorTree* EnemyBehaviorTree;
 };

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "BehaviorTree/BehaviorTree.h"
 #include "Enemy.generated.h"
 
 
@@ -37,6 +38,7 @@ public:
 
 	void setAttackTarget(AActor * i_attackTarget) { attackTarget = i_attackTarget; }
 	AActor * const getAttackTarget() { return attackTarget; }
+
 
 private:
 	AActor * moveTarget;

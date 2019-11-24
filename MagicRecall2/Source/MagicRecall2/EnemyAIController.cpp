@@ -4,22 +4,38 @@
 #include "EnemyAIController.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/Controller.h"
 #include "Enemy.h"
+#include "ConstructorHelpers.h"
+#include "BehaviorTree/BlackboardData.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "BehaviorTree/Blackboard/BlackboardKeyAllTypes.h"
+#include "EngineUtils.h"
 
 AEnemyAIController::AEnemyAIController() {
 	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bStartWithTickEnabled = true;
 }
 
 void AEnemyAIController::BeginPlay() {
-	AActor* player = GetWorld()->GetFirstPlayerController()->GetPawn();
+	Super::BeginPlay();
+	AActor* targetActor = nullptr;
+	for (TActorIterator<AActor> It(GetWorld(), chasingEnemyType); It; ++It)
+	{
+		targetActor = *It;
+		break;
+	}
+	check(targetActor);
 	IEnemy* enemy = Cast<IEnemy>(GetPawn());
-	if (!ensure(enemy)) { return; }
-	enemy->setAttackTarget(player);
-	enemy->setMoveTarget(player);
+	enemy->setAttackTarget(targetActor);
+	enemy->setMoveTarget(targetActor);
 }
 
 void AEnemyAIController::Tick(float i_DeltaTime) {
-	IEnemy* enemy = Cast<IEnemy>(GetPawn());
-	if (!ensure(enemy)) { return; }
-	enemy->move();
+	Super::Tick(i_DeltaTime);
+}
+
+void AEnemyAIController::OnPossess(APawn* i_pInPawn) {
+	Super::OnPossess(i_pInPawn);
+	RunBehaviorTree(EnemyBehaviorTree);
 }

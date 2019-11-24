@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EnemySpider.h"
-#include "Engine/World.h"
+#include "EnemyGhost.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/SphereComponent.h"
 #include "ConstructorHelpers.h"
@@ -11,21 +10,13 @@
 #include <EngineGlobals.h>
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 
-
-
 // Sets default values
-AEnemySpider::AEnemySpider()
+AEnemyGhost::AEnemyGhost()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-	//setMoveTarget(UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation());
-	//setMoveTarget(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
-	//GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
-	//setMoveTarget();
-	//setMoveTarget(UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation());
-	
+	PrimaryActorTick.bCanEverTick = false;
 
-	//Creates a placeholder sphere for spiders
+	//Creates a placeholder sphere for ghosts
 	USphereComponent* SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent"));
 	RootComponent = SphereComponent;
 	SphereComponent->InitSphereRadius(40.0f);
@@ -43,48 +34,44 @@ AEnemySpider::AEnemySpider()
 		SphereVisual->SetRelativeLocation(FVector(0.0f, 0.0f, -40.0f));
 		SphereVisual->SetWorldScale3D(FVector(0.8f));
 	}
-
 }
 
 // Called when the game starts or when spawned
-void AEnemySpider::BeginPlay()
+void AEnemyGhost::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void AEnemySpider::Tick(float DeltaTime)
+void AEnemyGhost::Tick(float DeltaTime)
 {
-	setMoveTarget(GetWorld()->GetFirstPlayerController()->GetParentActor()); //I imagine this will find the player actor and set as target.
-	//move_Implementation();
 	Super::Tick(DeltaTime);
 
 }
 
 // Called to bind functionality to input
-void AEnemySpider::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AEnemyGhost::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
 
-void AEnemySpider::move_Implementation()
+void AEnemyGhost::move_Implementation()
 {
-	//GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, FString::Printf(TEXT("Debug Player Position: x: %f, y: %f"), getMoveTarget().X, getMoveTarget().Y));
-	//SetActorLocation(getMoveTarget(), true);
-	//AddMovementInput(this->GetActorLocation() - getMoveTarget(), 100.f);
-	//ConsumeMovementInputVector();
-	UE_LOG(LogTemp, Log, TEXT("%s is moving towards %s"), *GetName(), *getMoveTarget()->GetName());
+	UE_LOG(LogTemp, Log, TEXT("%s is moving"), *GetName()); //No target
 }
 
-void AEnemySpider::receiveDamage_Implementation()
+void AEnemyGhost::receiveDamage_Implementation()
 {
 	Destroy(this);
 }
 
-void AEnemySpider::attack_Implementation()
+void AEnemyGhost::attack_Implementation()
 {
+	//This should shoot projectiles
 	UE_LOG(LogTemp, Log, TEXT("%s is attacking %s"), *GetName(), *getAttackTarget()->GetName());
 }
+
+
 

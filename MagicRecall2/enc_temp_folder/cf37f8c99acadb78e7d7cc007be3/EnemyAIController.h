@@ -22,8 +22,6 @@ private:
 
 public:
 	AEnemyAIController();
-	UPROPERTY(EditDefaultsOnly, Category = AI)
+	UPROPERTY(EditAnywhere, Category = AI)
 		UBehaviorTree* EnemyBehaviorTree;
-	UPROPERTY(EditDefaultsOnly, Category = AI)
-		TSubclassOf<AActor> chasingEnemyType;
 };

@@ -10,7 +10,6 @@
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyAllTypes.h"
-#include "EngineUtils.h"
 
 AEnemyAIController::AEnemyAIController() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -19,16 +18,10 @@ AEnemyAIController::AEnemyAIController() {
 
 void AEnemyAIController::BeginPlay() {
 	Super::BeginPlay();
-	AActor* targetActor = nullptr;
-	for (TActorIterator<AActor> It(GetWorld(), chasingEnemyType); It; ++It)
-	{
-		targetActor = *It;
-		break;
-	}
-	check(targetActor);
+	AActor* player = GetWorld()->GetFirstPlayerController()->GetPawn();
 	IEnemy* enemy = Cast<IEnemy>(GetPawn());
-	enemy->setAttackTarget(targetActor);
-	enemy->setMoveTarget(targetActor);
+	enemy->setAttackTarget(player);
+	enemy->setMoveTarget(player);
 }
 
 void AEnemyAIController::Tick(float i_DeltaTime) {

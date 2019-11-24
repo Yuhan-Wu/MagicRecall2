@@ -20,7 +20,7 @@ AEnemySlime::AEnemySlime()
 	USphereComponent* SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent"));
 	RootComponent = SphereComponent;
 	SphereComponent->InitSphereRadius(40.0f);
-	SphereComponent->SetCollisionProfileName(TEXT("Pawn"));
+	SphereComponent->SetCollisionProfileName(TEXT("EnemySlime"));
 	SphereComponent->SetCanEverAffectNavigation(false);
 
 	// Create and position a mesh component so we can see where our sphere is

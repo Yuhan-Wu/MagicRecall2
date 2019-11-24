@@ -30,10 +30,12 @@ AEnemySpider::AEnemySpider()
 	RootComponent = SphereComponent;
 	SphereComponent->InitSphereRadius(40.0f);
 	SphereComponent->SetCollisionProfileName(TEXT("Pawn"));
+	SphereComponent->SetCanEverAffectNavigation(false);
 
 	// Create and position a mesh component so we can see where our sphere is
 	UStaticMeshComponent* SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
 	SphereVisual->SetupAttachment(RootComponent);
+	SphereVisual->SetCanEverAffectNavigation(false);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereVisualAsset(TEXT("/Game/StarterContent/Shapes/Shape_Sphere.Shape_Sphere"));
 	if (SphereVisualAsset.Succeeded())
 	{
@@ -54,8 +56,8 @@ void AEnemySpider::BeginPlay()
 // Called every frame
 void AEnemySpider::Tick(float DeltaTime)
 {
-	setMoveTarget(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
-	move_Implementation();
+	//setMoveTarget(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
+	//move_Implementation();
 	Super::Tick(DeltaTime);
 
 }
@@ -69,10 +71,11 @@ void AEnemySpider::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AEnemySpider::move_Implementation()
 {
-	GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, FString::Printf(TEXT("Debug Player Position: x: %f, y: %f"), getMoveTarget().X, getMoveTarget().Y));
-	SetActorLocation(getMoveTarget(), true);
+	//GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, FString::Printf(TEXT("Debug Player Position: x: %f, y: %f"), getMoveTarget().X, getMoveTarget().Y));
+	//SetActorLocation(getMoveTarget(), true);
 	//AddMovementInput(this->GetActorLocation() - getMoveTarget(), 100.f);
 	//ConsumeMovementInputVector();
+	UE_LOG(LogTemp, Log, TEXT("%s is moving towards %s"), *GetName(), *getMoveTarget()->GetName());
 }
 
 void AEnemySpider::receiveDamage_Implementation()
@@ -81,5 +84,6 @@ void AEnemySpider::receiveDamage_Implementation()
 
 void AEnemySpider::attack_Implementation()
 {
+	UE_LOG(LogTemp, Log, TEXT("%s is attacking %s"), *GetName(), *getAttackTarget()->GetName());
 }
 

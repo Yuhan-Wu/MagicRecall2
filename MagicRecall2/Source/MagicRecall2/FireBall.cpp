@@ -2,6 +2,7 @@
 
 
 #include "FireBall.h"
+#include "Enemy.h"
 #include "MagicRecall2Character.h"
 
 // Sets default values
@@ -73,7 +74,6 @@ void AFireBall::Tick(float DeltaTime)
 }
 
 void AFireBall::MahouInDirection(const FVector& ShootDirection) {
-	// TODO: Need to be changed according to HOW MANY fireballs can be shot
 	// InitialDirection = ShootDirection;
 	//UE_LOG(LogTemp, Log, TEXT("SHOULD BE TWICE"));
 	ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
@@ -91,7 +91,10 @@ void AFireBall::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 		// UE_LOG(LogTemp, Log, TEXT("OVERLAP"));
 		Destroy();
 	}
-	// TODO: Whether it can be casted to a monster
+	else if (OtherActor != this && Cast<IEnemy>(OtherActor)) {
+		IEnemy* cur_monster = Cast<IEnemy>(OtherActor);
+		cur_monster->receiveDamage();
+	}
 }
 
 void AFireBall::SetSpeed(float speed) {

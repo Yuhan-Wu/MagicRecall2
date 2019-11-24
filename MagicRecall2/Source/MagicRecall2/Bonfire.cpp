@@ -37,7 +37,7 @@ void ABonfire::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		AMagicRecall2Character* wizard = Cast<AMagicRecall2Character>(OtherActor);
 		wizard->PowerUp();
 		// UE_LOG(LogTemp, Log, TEXT("POWERUP"));
-		// TODO: light it up
+		// TODO: light it up ->TA
 	}
 	// TODO: deal with slime
 }

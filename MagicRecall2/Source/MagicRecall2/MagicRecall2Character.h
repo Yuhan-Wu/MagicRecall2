@@ -85,6 +85,8 @@ protected:
 	int numOfFireballs = 3;
 	float cosValue = 0.5f;
 
+	int hp = 100;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -99,5 +101,7 @@ public:
 	// Functions related to power-ups
 	int PowerUp();
 	int BackToMuggle();
+
+	void TakeDamage(int damage);
 };
 

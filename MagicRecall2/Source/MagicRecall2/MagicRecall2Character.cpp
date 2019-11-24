@@ -210,3 +210,10 @@ int AMagicRecall2Character::BackToMuggle() {
 	}
 	return level;
 }
+
+void AMagicRecall2Character::TakeDamage(int damage) {
+	hp -= damage;
+	if (hp <= 0) {
+		// TODO die
+	}
+}

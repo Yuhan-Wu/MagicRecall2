@@ -12,9 +12,9 @@
 struct MAGICRECALL2_API ConfigureInfo {
 	std::vector<FVector> locations;
 	float interval;
-	int num;
-	int times;// how many times it spawns before a boss appears
+	int times; // how many times it spawns before a boss appears
+	// One by one
 
 	bool isBoss;
-	int rounds;//set how many rounds(only for boss)
+	int rounds; // set how many rounds(only for boss)
 };

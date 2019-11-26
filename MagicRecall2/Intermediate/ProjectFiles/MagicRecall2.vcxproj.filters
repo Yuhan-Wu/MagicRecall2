@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\MagicRecall2.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{C4103CA9-95AD-4580-B841-146FA92988C8}</UniqueIdentifier>
+      <UniqueIdentifier>{CA00F1BF-1DCC-4B14-91DA-300F84B81BB2}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\MagicRecall2.Target.cs">
       <Filter>Source</Filter>
@@ -13,7 +13,7 @@
     </None>
     <None Include="..\..\.gitignore" />
     <Filter Include="Config">
-      <UniqueIdentifier>{BD27B96B-3262-47BD-8AC1-FA51D7326C76}</UniqueIdentifier>
+      <UniqueIdentifier>{215833CE-21E1-432C-AFE1-61BD692826FC}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -34,7 +34,7 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\MagicRecall2">
-      <UniqueIdentifier>{A866A8C2-F482-4719-A082-DB48FD544202}</UniqueIdentifier>
+      <UniqueIdentifier>{026B9297-4BF0-4511-9C95-B78DFB16AE06}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\MagicRecall2\Bonfire.cpp">
       <Filter>Source\MagicRecall2</Filter>
@@ -46,6 +46,9 @@
       <Filter>Source\MagicRecall2</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\MagicRecall2\BTS_UpdateView.h">
+      <Filter>Source\MagicRecall2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\MagicRecall2\ConfigureInfo.h">
       <Filter>Source\MagicRecall2</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\MagicRecall2\Enemy.cpp">
@@ -99,21 +102,14 @@
     <ClInclude Include="..\..\Source\MagicRecall2\MagicRecall2GameMode.h">
       <Filter>Source\MagicRecall2</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="..\..\Source\MagicRecall2\MonsterInc.cpp">
+      <Filter>Source\MagicRecall2</Filter>
+    </ClCompile>
     <ClInclude Include="..\..\Source\MagicRecall2\MonsterInc.h">
       <Filter>Source\MagicRecall2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MagicRecall2\MonsterTypes.h">
       <Filter>Source\MagicRecall2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\MagicRecall2\ConfigureInfo.h">
-      <Filter>Source\MagicRecall2</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Source\MagicRecall2\MonsterInc.cpp">
-      <Filter>Source\MagicRecall2</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

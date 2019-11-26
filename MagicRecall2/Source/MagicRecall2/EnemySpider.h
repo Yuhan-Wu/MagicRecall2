@@ -16,6 +16,9 @@ public:
 	// Sets default values for this pawn's properties
 	AEnemySpider();
 
+	UPROPERTY(BlueprintTReadWrite)
+	TSubclassOf<AEnemySpider> BP_Spider;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -38,5 +41,8 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void attack();
 	virtual void attack_Implementation() override;
+
+	//TODO: need to put into parent class
+	static AEnemySpider* spawn(FVector& location);
 
 };

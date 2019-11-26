@@ -29,9 +29,9 @@ void AMonsterInc::Tick(float DeltaTime)
 		spawn_boss = true;
 		for (std::pair<const MonsterTypes, ConfigureInfo> it : intervals) {
 			if ((intervals[it.first].interval -= DeltaTime) <= 0) {
-				for (auto i = 0; i < intervals[it.first].num; i++) {
-					Spawn(it.first);
-				}
+				
+				Spawn(it.first);
+				
 				intervals[it.first].interval = Monsters[it.first].interval;
 				if (--intervals[it.first].times != 0) {
 					spawn_boss = false;
@@ -40,9 +40,9 @@ void AMonsterInc::Tick(float DeltaTime)
 			}
 		}
 		if (spawn_boss) {
-			for (auto i = 0; i < intervals[bossType].num; i++) {
-				Spawn(bossType);
-			}
+			
+			Spawn(bossType);
+			
 			for (std::pair<const MonsterTypes, ConfigureInfo> it : intervals) {
 				intervals[it.first].times = Monsters[it.first].times;
 			}
@@ -68,7 +68,8 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 	{
 		std::vector<FVector> locations = Monsters[MonsterTypes::Spider].locations;
 		int random_loc = rand() / locations.size();
-		GetWorld()->SpawnActor(AEnemySpider::StaticClass(), &(locations[random_loc]));
+		//TODO: probably need to store the pointer
+		AEnemySpider* enemy=AEnemySpider::spawn(locations[random_loc]);
 		break;
 	}
 		//TODO add other monsters

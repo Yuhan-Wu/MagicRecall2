@@ -44,6 +44,9 @@ AEnemySpider::AEnemySpider()
 		SphereVisual->SetWorldScale3D(FVector(0.8f));
 	}
 
+	static ConstructorHelpers::FObjectFinder<UClass> SpiderBPFinder(TEXT("Blueprint'/MagicRecall2/MagicRecall2/Content/Blueprints/Enemies/BP_Spider.uasset'"));
+	BP_Spider = SpiderBPFinder.Object;
+
 }
 
 // Called when the game starts or when spawned
@@ -85,5 +88,9 @@ void AEnemySpider::receiveDamage_Implementation()
 void AEnemySpider::attack_Implementation()
 {
 	UE_LOG(LogTemp, Log, TEXT("%s is attacking %s"), *GetName(), *getAttackTarget()->GetName());
+}
+
+AEnemySpider* AEnemySpider::spawn(FVector& location) {
+	return static_cast<AEnemySpider*>(GetWorld()->SpawnActor(AEnemySpider::StaticClass(), &location));
 }
 

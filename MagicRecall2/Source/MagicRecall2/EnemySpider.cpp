@@ -87,4 +87,3 @@ void AEnemySpider::attack_Implementation()
 {
 	UE_LOG(LogTemp, Log, TEXT("%s is attacking %s"), *GetName(), *getAttackTarget()->GetName());
 }
-

@@ -2,6 +2,8 @@
 
 #include "MonsterInc.h"
 #include "Engine/World.h"
+#include "Math/UnrealMathUtility.h"
+#include "Components/BoxComponent.h"
 #include "ConstructorHelpers.h"
 #include <cstdlib>
 
@@ -16,6 +18,7 @@ AMonsterInc::AMonsterInc()
 
 	static ConstructorHelpers::FObjectFinder<UClass> SpiderBPFinder(TEXT("Blueprint'/Game/Blueprints/Enemies/BP_Spider.BP_Spider_C'"));
 	BP_Spider= SpiderBPFinder.Object;
+
 }
 
 // Called when the game starts or when spawned
@@ -95,9 +98,9 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 	case MonsterTypes::Spider:
 	{
 		std::vector<FVector> locations = Monsters[MonsterTypes::Spider].locations;
-		int random_loc = rand() % locations.size();
+		int random_loc = rand() % NUM_OF_POSITIONS;
+		FVector location = FMath::RandPointInBox(boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox());
 		//TODO: probably need to store the pointer
-		//AEnemySpider* enemy=AEnemySpider().spawn(locations[random_loc]);
 		AEnemySpider* enemy= static_cast<AEnemySpider*>(GetWorld()->SpawnActor(BP_Spider, &locations[random_loc]));
 		break;
 	}

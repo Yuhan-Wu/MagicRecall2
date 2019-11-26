@@ -2,9 +2,12 @@
 
 #pragma once
 
+#define NUM_OF_POSITIONS 4
+
 #include "CoreMinimal.h"
 #include <map>
 #include "GameFramework/Actor.h"
+#include "Engine/TriggerBox.h"
 #include "ConfigureInfo.h"
 #include "MonsterTypes.h"
 #include "EnemySpider.h"
@@ -40,6 +43,13 @@ protected:
 	float total_time;
 	//how many monsters on the map
 	int total_num;
+
+	//UPROPERTY(EditAnywhere, Category = Gameplay)
+	//FVector Position_List[NUM_OF_POSITIONS];
+	
+	UPROPERTY(EditAnywhere)
+	TArray<ATriggerBox *> boxes;
+
 
 public:	
 	// Called every frame

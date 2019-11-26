@@ -25,7 +25,7 @@ AEnemySpider::AEnemySpider()
 	//setMoveTarget(UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation());
 	
 
-		// Our root component will be a sphere that reacts to physics
+	//Creates a placeholder sphere for spiders
 	USphereComponent* SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent"));
 	RootComponent = SphereComponent;
 	SphereComponent->InitSphereRadius(40.0f);
@@ -56,7 +56,7 @@ void AEnemySpider::BeginPlay()
 // Called every frame
 void AEnemySpider::Tick(float DeltaTime)
 {
-	//setMoveTarget(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
+	setMoveTarget(GetWorld()->GetFirstPlayerController()->GetParentActor()); //I imagine this will find the player actor and set as target.
 	//move_Implementation();
 	Super::Tick(DeltaTime);
 
@@ -80,6 +80,7 @@ void AEnemySpider::move_Implementation()
 
 void AEnemySpider::receiveDamage_Implementation()
 {
+	Destroy(this);
 }
 
 void AEnemySpider::attack_Implementation()

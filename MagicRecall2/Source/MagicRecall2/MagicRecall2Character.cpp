@@ -157,9 +157,9 @@ void AMagicRecall2Character::MahouCastOff() {
 
 void AMagicRecall2Character::Mahou() {
 	// Play animation, sound, whatever :)
-	
 	if (Fireballs)
 	{
+		UE_LOG(LogTemp, Log, TEXT("Fireball_success"));
 		// Get location & rotation
 		FVector WizardLocation;
 		FRotator WizardRotation;

@@ -75,7 +75,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9A2A6A26-9C34-4389-9C85-99D0A6AAD452}</ProjectGuid>
+    <ProjectGuid>{9A53EB78-FAEA-4F22-8650-8189C4512796}</ProjectGuid>
     <Keyword>MakeFileProj</Keyword>
     <RootNamespace>MagicRecall2</RootNamespace>
     <PlatformToolset>v142</PlatformToolset>

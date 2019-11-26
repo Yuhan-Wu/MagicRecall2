@@ -32,6 +32,15 @@ protected:
 	float max_time = 10;
 	int max_num = 10;
 
+	std::map<MonsterTypes, ConfigureInfo> intervals;
+	int rounds;
+	MonsterTypes bossType;
+
+	//how long since last monster spawns
+	float total_time;
+	//how many monsters on the map
+	int total_num;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -39,13 +48,4 @@ public:
 
 	UFUNCTION()
 	void MonsterNumDecrease();
-
-	static std::map<MonsterTypes, ConfigureInfo> intervals;
-	static int rounds;
-	static MonsterTypes bossType;
-
-	//how long since last monster spawns
-	static float total_time;
-	//how many monsters on the map
-	static int total_num;
 };

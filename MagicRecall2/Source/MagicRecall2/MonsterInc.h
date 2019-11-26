@@ -28,14 +28,6 @@ protected:
 	void Spawn(MonsterTypes);
 
 	std::map<MonsterTypes,ConfigureInfo> Monsters;
-	std::map<MonsterTypes, ConfigureInfo> intervals;
-	int rounds;
-	MonsterTypes bossType;
-
-	//how long since last monster spawns
-	float total_time;
-	//how many monsters on the map
-	int total_num;
 
 	float max_time = 10;
 	int max_num = 10;
@@ -47,4 +39,13 @@ public:
 
 	UFUNCTION()
 	void MonsterNumDecrease();
+
+	static std::map<MonsterTypes, ConfigureInfo> intervals;
+	static int rounds;
+	static MonsterTypes bossType;
+
+	//how long since last monster spawns
+	static float total_time;
+	//how many monsters on the map
+	static int total_num;
 };

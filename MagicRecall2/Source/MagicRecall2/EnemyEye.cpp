@@ -2,6 +2,7 @@
 
 
 #include "EnemyEye.h"
+#include "ProjectileEye.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/SphereComponent.h"
 #include "ConstructorHelpers.h"
@@ -48,7 +49,7 @@ void AEnemyEye::BeginPlay()
 void AEnemyEye::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	//attack();
 }
 
 // Called to bind functionality to input
@@ -71,6 +72,26 @@ void AEnemyEye::receiveDamage_Implementation()
 void AEnemyEye::attack_Implementation()
 {
 	//Add complex projectiles
-	UE_LOG(LogTemp, Log, TEXT("%s is attacking"), *GetName());
+	FVector EyeLocation;
+	FRotator EyeRotation;
+	GetActorEyesViewPoint(EyeLocation, EyeRotation);
+
+	// To world location
+	FVector MuzzleLocation = EyeLocation; //+ FTransform(GhostRotation).TransformVector(MuzzleOffset);
+	//MuzzleLocation.Z -= 10;
+	FRotator MuzzleRotation = EyeRotation;
+
+
+	UWorld* World = GetWorld();
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = Instigator;
+
+	//FRotator MuzzleRotationNinety = EyeRotation.Add(0, 90, 0);
+	AProjectileEye* ProjectileNinetyDegrees = GetWorld()->SpawnActor< AProjectileEye >(MuzzleLocation, MuzzleRotation, SpawnParams);
+	//FRotator MuzzleRotationNegNinety = EyeRotation.Add(0, -180, 0);
+	//AProjectileEye* ProjectileNegNinetyDegrees = GetWorld()->SpawnActor< AProjectileGhost >(MuzzleLocation, MuzzleRotationNegNinety, SpawnParams);
+	UE_LOG(LogTemp, Log, TEXT("Eye Launches Projectiles"));
+	//UE_LOG(LogTemp, Log, TEXT("%s is attacking"), *GetName());
 }
 

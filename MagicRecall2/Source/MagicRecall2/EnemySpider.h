@@ -37,6 +37,6 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void attack();
-	virtual void attack_Implementation() override;
+		virtual void attack_Implementation() override;
 
 };

@@ -37,7 +37,7 @@ void AMonsterInc::Tick(float DeltaTime)
 	bool spawn_boss = false;
 	do {
 		bool all_clear = true;
-		if (total_time < max_time && total_num < max_num) {
+		if (total_time < max_time || total_num < max_num) {
 			spawn_boss = true;
 			for (std::pair<const MonsterTypes, ConfigureInfo> it : intervals) {
 				if (intervals[it.first].nums != 0) {
@@ -95,7 +95,7 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 	case MonsterTypes::Spider:
 	{
 		std::vector<FVector> locations = Monsters[MonsterTypes::Spider].locations;
-		int random_loc = rand() / locations.size();
+		int random_loc = rand() % locations.size();
 		//TODO: probably need to store the pointer
 		//AEnemySpider* enemy=AEnemySpider().spawn(locations[random_loc]);
 		AEnemySpider* enemy= static_cast<AEnemySpider*>(GetWorld()->SpawnActor(BP_Spider, &locations[random_loc]));

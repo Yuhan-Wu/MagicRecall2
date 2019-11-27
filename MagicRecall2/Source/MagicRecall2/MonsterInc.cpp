@@ -122,6 +122,7 @@ void AMonsterInc::MonsterNumDecrease() {
 
 //TODO: need to create a new interval map for twitch
 void AMonsterInc::ReceiveTwitchInput(FString input) {
+	// UE_LOG(LogTemp, Log, TEXT("Spawn"));
 	MonsterTypes type = enum_map[input.ToUpper()];
 	bool spawn_boss = true;
 	bool all_clear = true;

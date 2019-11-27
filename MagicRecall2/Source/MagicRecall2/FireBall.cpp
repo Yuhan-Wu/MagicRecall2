@@ -69,7 +69,7 @@ void AFireBall::Tick(float DeltaTime)
 	
 		FVector Direction = Wizard_Location - Fireball_Location;
 		// UE_LOG(LogTemp, Log, TEXT("%s"),*Wizard_Location.ToCompactString());
-		ProjectileMovementComponent->Velocity = Direction * ProjectileMovementComponent->InitialSpeed/700;
+		ProjectileMovementComponent->Velocity = Direction * ProjectileMovementComponent->InitialSpeed/100;
 	}
 
 }

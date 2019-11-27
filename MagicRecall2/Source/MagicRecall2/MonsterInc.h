@@ -29,16 +29,19 @@ protected:
 	void Spawn(MonsterTypes);
 
 	std::map<MonsterTypes,FConfigureInfo> Monsters;
+	std::map<MonsterTypes, FConfigureInfo> twitch_Monsters;
 
 	float max_time = 10;
-	int max_num = 10;
+	int max_num = 2;
 
 	std::map<MonsterTypes, FConfigureInfo> intervals;
+	std::map<MonsterTypes, FConfigureInfo> twitch_intervals;
 	int rounds;
 	MonsterTypes bossType;
 
 	//how long since last monster spawns
 	float total_time;
+	float fire_function;
 	//how many monsters on the map
 	int total_num;
 

@@ -80,7 +80,7 @@ void AEnemySpider::move_Implementation()
 
 void AEnemySpider::receiveDamage_Implementation()
 {
-	Destroy(this);
+	Destroy();
 }
 
 void AEnemySpider::attack_Implementation()

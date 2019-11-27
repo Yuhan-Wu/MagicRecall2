@@ -65,7 +65,7 @@ void AEnemyGhost::move_Implementation()
 
 void AEnemyGhost::receiveDamage_Implementation()
 {
-	Destroy(this);
+	Destroy();
 }
 
 void AEnemyGhost::attack_Implementation()

@@ -66,7 +66,7 @@ void AEnemySlime::move_Implementation()
 
 void AEnemySlime::receiveDamage_Implementation()
 {
-	Destroy(this);
+	Destroy();
 }
 
 void AEnemySlime::attack_Implementation()

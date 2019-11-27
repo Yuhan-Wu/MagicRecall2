@@ -66,7 +66,7 @@ void AEnemyEye::move_Implementation()
 
 void AEnemyEye::receiveDamage_Implementation()
 {
-	Destroy(this);
+	Destroy();
 }
 
 void AEnemyEye::attack_Implementation()

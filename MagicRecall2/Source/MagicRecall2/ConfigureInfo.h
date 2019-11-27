@@ -19,12 +19,10 @@ struct FConfigureInfo {
 	UPROPERTY(EditAnywhere, Category = DisplayInfo)
 	MonsterTypes type;
 
-	UPROPERTY(EditAnywhere, Category = DisplayInfo)
-	TArray<FVector> locations; // range
 	// float interval;
 	UPROPERTY(EditAnywhere, Category = DisplayInfo)
 	uint8 times; // how many times it spawns before a boss appears
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = DisplayInfo)
 	uint8 nums;
 
 	UPROPERTY(EditAnywhere, Category = DisplayInfo)

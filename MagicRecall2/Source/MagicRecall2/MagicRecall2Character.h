@@ -87,6 +87,10 @@ protected:
 
 	int hp = 100;
 
+	bool block_attack;
+
+	FTimerHandle handler;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -97,6 +101,9 @@ public:
 	void MahouCast();
 	void MahouCastOff();
 	void Mahou();
+
+	UFUNCTION()
+	void ShieldDisappear();
 
 	// Functions related to power-ups
 	int PowerUp();

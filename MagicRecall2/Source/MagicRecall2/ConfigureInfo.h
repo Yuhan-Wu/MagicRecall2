@@ -4,17 +4,39 @@
 
 #include "CoreMinimal.h"
 #include "MonsterTypes.h"
+
+#include "CoreMinimal.h"
 #include <vector>
+#include "ConfigureInfo.generated.h"
 
 /**
  * 
  */
-struct MAGICRECALL2_API ConfigureInfo {
-	std::vector<FVector> locations; // range
-	// float interval;
-	int times; // how many times it spawns before a boss appears
-	int nums;
+USTRUCT()
+struct FConfigureInfo {
+	GENERATED_BODY()
 
+	UPROPERTY(EditAnywhere, Category = DisplayInfo)
+	MonsterTypes type;
+
+	UPROPERTY(EditAnywhere, Category = DisplayInfo)
+	TArray<FVector> locations; // range
+	// float interval;
+	UPROPERTY(EditAnywhere, Category = DisplayInfo)
+	uint8 times; // how many times it spawns before a boss appears
+	UPROPERTY()
+	uint8 nums;
+
+	UPROPERTY(EditAnywhere, Category = DisplayInfo)
 	bool isBoss;
-	int rounds; // set how many rounds(only for boss)
+	UPROPERTY(EditAnywhere, Category = DisplayInfo)
+	uint8 rounds; // set how many rounds(only for boss)
+
+	FConfigureInfo() {
+		type = MonsterTypes::Eye;
+		times = 0;
+		nums = 0;
+		isBoss = false;
+		rounds = 0;
+	}
 };

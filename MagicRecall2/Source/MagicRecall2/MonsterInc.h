@@ -2,8 +2,6 @@
 
 #pragma once
 
-#define NUM_OF_POSITIONS 4
-
 #include "CoreMinimal.h"
 #include <map>
 #include "GameFramework/Actor.h"
@@ -13,7 +11,7 @@
 #include "EnemySpider.h"
 #include "MonsterInc.generated.h"
 
-UCLASS()
+UCLASS(BlueprintType)
 class MAGICRECALL2_API AMonsterInc : public AActor
 {
 	GENERATED_BODY()
@@ -30,12 +28,12 @@ protected:
 	virtual void BeginPlay() override;
 	void Spawn(MonsterTypes);
 
-	std::map<MonsterTypes,ConfigureInfo> Monsters;
+	std::map<MonsterTypes,FConfigureInfo> Monsters;
 
 	float max_time = 10;
 	int max_num = 10;
 
-	std::map<MonsterTypes, ConfigureInfo> intervals;
+	std::map<MonsterTypes, FConfigureInfo> intervals;
 	int rounds;
 	MonsterTypes bossType;
 
@@ -50,12 +48,23 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TArray<ATriggerBox *> boxes;
 
+	UPROPERTY(EditAnywhere)
+	TArray<struct FConfigureInfo> configures;
+
+	UPROPERTY(EditAnywhere)
+	TArray<struct FConfigureInfo> twitch_configures;
+
+	void Configure();
+
+	std::map<FString, MonsterTypes> enum_map;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	void Configure(std::map<MonsterTypes, ConfigureInfo>);
 
 	UFUNCTION()
 	void MonsterNumDecrease();
+
+	UFUNCTION(BlueprintCallable)
+	void ReceiveTwitchInput(FString input);
 };

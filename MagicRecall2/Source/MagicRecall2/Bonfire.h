@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "MagicRecall2Character.h"
 #include "Components/BoxComponent.h"
 #include "Bonfire.generated.h"
 
-UCLASS()
+UCLASS(BlueprintType)
 class MAGICRECALL2_API ABonfire : public AActor
 {
 	GENERATED_BODY()
@@ -31,5 +32,8 @@ public:
 
 	UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
 	UBoxComponent* CollisionComponent;
+
+	UFUNCTION(BlueprintCallable)
+	void ReceiveTwitchInput(AMagicRecall2Character* player);
 
 };

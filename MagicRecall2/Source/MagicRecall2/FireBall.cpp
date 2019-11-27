@@ -61,11 +61,12 @@ void AFireBall::Tick(float DeltaTime)
 
 	if (isBack) {
 		// UE_LOG(LogTemp, Log, TEXT("Back"));
-		FVector Wizard_Location = Wizard->GetActorLocation();
-		FVector Fireball_Location = this->GetActorLocation();
 		if (Wizard == nullptr) {
 			UE_LOG(LogTemp, Log, TEXT("Fail"));
 		}
+		FVector Wizard_Location = Wizard->GetActorLocation();
+		FVector Fireball_Location = this->GetActorLocation();
+	
 		FVector Direction = Wizard_Location - Fireball_Location;
 		// UE_LOG(LogTemp, Log, TEXT("%s"),*Wizard_Location.ToCompactString());
 		ProjectileMovementComponent->Velocity = Direction * ProjectileMovementComponent->InitialSpeed/700;
@@ -106,4 +107,3 @@ void AFireBall::SetSpeed(float speed) {
 void AFireBall::SetDistance(float distance) {
 	MaxDistance = distance;
 }
-

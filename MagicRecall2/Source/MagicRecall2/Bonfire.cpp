@@ -2,7 +2,6 @@
 
 
 #include "Bonfire.h"
-#include "MagicRecall2Character.h"
 
 // Sets default values
 ABonfire::ABonfire()
@@ -40,5 +39,10 @@ void ABonfire::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		// TODO: light it up ->TA
 	}
 	// TODO: deal with slime
+}
+
+void ABonfire::ReceiveTwitchInput(AMagicRecall2Character* wizard) {
+	isLit = true;
+	wizard->PowerUp();
 }
 

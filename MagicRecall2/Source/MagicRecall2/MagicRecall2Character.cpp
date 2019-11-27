@@ -45,6 +45,7 @@ AMagicRecall2Character::AMagicRecall2Character()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	block_attack = false;
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -164,7 +165,8 @@ void AMagicRecall2Character::Mahou() {
 		FVector WizardLocation;
 		FRotator WizardRotation;
 		GetActorEyesViewPoint(WizardLocation, WizardRotation);
-
+		WizardRotation=GetArrowComponent()->GetComponentRotation();
+		
 		// To world location
 		FVector MuzzleLocation = WizardLocation + FTransform(WizardRotation).TransformVector(MuzzleOffset);
 		FRotator MuzzleRotation = WizardRotation;
@@ -212,8 +214,20 @@ int AMagicRecall2Character::BackToMuggle() {
 }
 
 void AMagicRecall2Character::TakeDamage(int damage) {
-	hp -= damage;
-	if (hp <= 0) {
-		// TODO die
+	if (!block_attack) {
+		hp -= damage;
+		if (hp <= 0) {
+			// TODO die
+		}
+		else {
+			block_attack=true;
+			GetWorld()->GetTimerManager().SetTimer(handler, this, &AMagicRecall2Character::ShieldDisappear, 2, false);
+			// TODO: add shield, probably also need to remove timer???
+		}
 	}
+}
+
+void AMagicRecall2Character::ShieldDisappear() {
+	block_attack = false;
+	// TODO: remove shield
 }

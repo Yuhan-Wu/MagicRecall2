@@ -52,4 +52,6 @@ public:
 
 	void SetSpeed(float);
 	void SetDistance(float);
+
+	
 };

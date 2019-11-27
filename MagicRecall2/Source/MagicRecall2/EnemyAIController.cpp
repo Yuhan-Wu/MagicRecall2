@@ -19,16 +19,6 @@ AEnemyAIController::AEnemyAIController() {
 
 void AEnemyAIController::BeginPlay() {
 	Super::BeginPlay();
-	AActor* targetActor = nullptr;
-	for (TActorIterator<AActor> It(GetWorld(), chasingEnemyType); It; ++It)
-	{
-		targetActor = *It;
-		break;
-	}
-	check(targetActor);
-	IEnemy* enemy = Cast<IEnemy>(GetPawn());
-	enemy->setAttackTarget(targetActor);
-	enemy->setMoveTarget(targetActor);
 }
 
 void AEnemyAIController::Tick(float i_DeltaTime) {
@@ -37,5 +27,17 @@ void AEnemyAIController::Tick(float i_DeltaTime) {
 
 void AEnemyAIController::OnPossess(APawn* i_pInPawn) {
 	Super::OnPossess(i_pInPawn);
+	AActor* targetActor = nullptr;
+	for (TActorIterator<AActor> It(GetWorld(), chasingEnemyType); It; ++It)
+	{
+		targetActor = *It;
+		break;
+	}
+	check(targetActor);
+	IEnemy* enemy = Cast<IEnemy>(i_pInPawn);
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *GetPawn()->GetName());
+	if (!GetPawn()) UE_LOG(LogTemp, Warning, TEXT("NULLLLLLLL"));
+	enemy->setAttackTarget(targetActor);
+	enemy->setMoveTarget(targetActor);
 	RunBehaviorTree(EnemyBehaviorTree);
 }

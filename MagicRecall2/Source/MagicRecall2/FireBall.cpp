@@ -3,6 +3,9 @@
 
 #include "FireBall.h"
 #include "Enemy.h"
+#include "EnemySpider.h"
+#include "EnemyEye.h"
+#include "EnemyGhost.h"
 #include "MagicRecall2Character.h"
 
 // Sets default values
@@ -93,8 +96,17 @@ void AFireBall::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 		Destroy();
 	}
 	else if (OtherActor != this && Cast<IEnemy>(OtherActor)) {
-		IEnemy* cur_monster = Cast<IEnemy>(OtherActor);
-		cur_monster->receiveDamage();
+		if (Cast<AEnemySpider>(OtherActor)) {
+			Cast<AEnemySpider>(OtherActor)->receiveDamage();
+		}
+		else if (Cast<AEnemyEye>(OtherActor)) {
+			Cast<AEnemyEye>(OtherActor)->receiveDamage();
+		}
+		else if (Cast<AEnemyGhost>(OtherActor)) {
+			Cast<AEnemyGhost>(OtherActor)->receiveDamage();
+		}
+		//IEnemy* cur_monster = Cast<IEnemy>(OtherActor);
+		//cur_monster->receiveDamage();
 	}
 }
 

@@ -154,12 +154,14 @@ void AMagicRecall2Character::MahouCast() {
 
 void AMagicRecall2Character::MahouCastOff() {
 	GetWorld()->GetTimerManager().ClearTimer(MahouTimer);
+	bAttacking = false;
 }
 
 void AMagicRecall2Character::Mahou() {
 	// Play animation, sound, whatever :)
 	if (Fireballs)
 	{
+		bAttacking = true;
 		UE_LOG(LogTemp, Log, TEXT("Fireball_success"));
 		// Get location & rotation
 		FVector WizardLocation;

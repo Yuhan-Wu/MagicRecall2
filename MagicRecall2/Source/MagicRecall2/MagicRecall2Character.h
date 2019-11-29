@@ -110,5 +110,8 @@ public:
 	int BackToMuggle();
 
 	void TakeDamage(int damage);
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bAttacking;
 };
 

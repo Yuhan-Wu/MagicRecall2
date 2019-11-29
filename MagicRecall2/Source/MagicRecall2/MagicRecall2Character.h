@@ -87,7 +87,6 @@ protected:
 
 	int hp = 100;
 
-	bool block_attack;
 
 	FTimerHandle handler;
 
@@ -113,5 +112,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	bool bAttacking;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool block_attack;
+
 };
 

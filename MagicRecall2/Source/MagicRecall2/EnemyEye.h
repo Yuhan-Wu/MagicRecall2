@@ -3,12 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
+#include "GameFramework/Character.h"
 #include "Enemy.h"
 #include "EnemyEye.generated.h"
 
 UCLASS()
-class MAGICRECALL2_API AEnemyEye : public APawn, public IEnemy
+class MAGICRECALL2_API AEnemyEye : public ACharacter, public IEnemy
 {
 	GENERATED_BODY()
 
@@ -17,15 +17,8 @@ public:
 	AEnemyEye();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void move();

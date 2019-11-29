@@ -34,6 +34,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	FVector MuzzleOffset;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		int health;
+
 	// Fireballs
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<class AFireBall> Fireballs;

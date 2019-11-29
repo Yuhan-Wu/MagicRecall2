@@ -2,6 +2,7 @@
 
 
 #include "Bonfire.h"
+#include "EnemySlime.h"
 
 // Sets default values
 ABonfire::ABonfire()
@@ -38,7 +39,12 @@ void ABonfire::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		// UE_LOG(LogTemp, Log, TEXT("POWERUP"));
 		// TODO: light it up ->TA
 	}
-	// TODO: deal with slime
+	else if (OtherActor != this && Cast<AEnemySlime>(OtherActor) && isLit) {
+		// TODO: deal with slime
+		isLit = false;
+		AMagicRecall2Character* wizard = Cast<AMagicRecall2Character>(GetWorld()->GetFirstPlayerController());
+		wizard->BackToMuggle();
+	}
 }
 
 void ABonfire::ReceiveTwitchInput(AMagicRecall2Character* wizard) {

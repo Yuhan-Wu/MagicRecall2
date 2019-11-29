@@ -16,6 +16,7 @@ AMonsterInc::AMonsterInc()
 	total_time = 0;
 	total_num = 0;
 	fire_function = 0;
+	total_num_of_monsters = 0;
 
 	static ConstructorHelpers::FObjectFinder<UClass> SpiderBPFinder(TEXT("Blueprint'/Game/Blueprints/Enemies/BP_Spider.BP_Spider_C'"));
 	BP_Spider= SpiderBPFinder.Object;
@@ -93,19 +94,23 @@ void AMonsterInc::Configure() {
 		if (it.isBoss) {
 			bossType = it.type;
 			rounds = it.rounds;
+			total_num_of_monsters += it.nums * it.rounds;
 			break;
 		}
 		intervals[it.type] = it;
 		Monsters[it.type] = it;
+		total_num_of_monsters += it.nums * it.times;
 	}
 	for (FConfigureInfo it : twitch_configures) {
 		if (it.isBoss) {
 			bossType = it.type;
 			rounds = it.rounds;
+			total_num_of_monsters += it.nums * it.rounds;
 			break;
 		}
 		twitch_intervals[it.type] = it;
 		twitch_Monsters[it.type] = it;
+		total_num_of_monsters += it.nums * it.times;
 	}
 }
 

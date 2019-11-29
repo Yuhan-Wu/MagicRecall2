@@ -70,4 +70,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ReceiveTwitchInput(FString input);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	int total_num_of_monsters;
 };

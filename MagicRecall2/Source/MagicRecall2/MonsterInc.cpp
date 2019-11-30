@@ -18,7 +18,7 @@ AMonsterInc::AMonsterInc()
 	fire_function = 0;
 	total_num_of_monsters = 0;
 
-	static ConstructorHelpers::FObjectFinder<UClass> SpiderBPFinder(TEXT("Blueprint'/Game/Blueprints/Enemies/BP_Spider.BP_Spider_C'"));
+	static ConstructorHelpers::FObjectFinder<UClass> SpiderBPFinder(TEXT("Blueprint'/Game/Blueprints/Character/BP_Spider.BP_Spider_C'"));
 	BP_Spider= SpiderBPFinder.Object;
 
 	enum_map["SPIDER"] = MonsterTypes::Spider;

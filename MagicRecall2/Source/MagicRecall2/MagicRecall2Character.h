@@ -90,7 +90,6 @@ protected:
 
 	int hp = 100;
 
-	bool block_attack;
 
 	FTimerHandle handler;
 
@@ -113,5 +112,12 @@ public:
 	int BackToMuggle();
 
 	void TakeDamage(int damage);
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bAttacking;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool block_attack;
+
 };
 

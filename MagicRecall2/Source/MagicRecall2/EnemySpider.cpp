@@ -9,6 +9,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include <EngineGlobals.h>
+#include "MonsterInc.h"
+#include "EngineUtils.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 
 
@@ -43,6 +45,10 @@ void AEnemySpider::move_Implementation()
 
 void AEnemySpider::receiveDamage_Implementation()
 {
+	for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
+	{
+		It->MonsterNumDecrease();
+	}
 	Destroy();
 }
 

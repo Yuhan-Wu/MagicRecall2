@@ -9,6 +9,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include <EngineGlobals.h>
+#include "MonsterInc.h"
+#include "EngineUtils.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 
 // Sets default values
@@ -24,6 +26,10 @@ void AEnemyEye::move_Implementation()
 
 void AEnemyEye::receiveDamage_Implementation()
 {
+	for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
+	{
+		It->MonsterNumDecrease();
+	}
 	Destroy();
 }
 

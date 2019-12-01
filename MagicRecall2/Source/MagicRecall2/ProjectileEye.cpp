@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "ProjectileEye.h"
 #include "CoreMinimal.h"
 #include "Engine.h"
-#include "ProjectileEye.h"
 #include "Components/StaticMeshComponent.h"
 
 // Sets default values
@@ -17,6 +17,7 @@ AProjectileEye::AProjectileEye()
 	RootComponent = CollisionComponent;
 
 	// Create and position a mesh component so we can see the projectiles
+	/*
 	UStaticMeshComponent* SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
 	SphereVisual->SetupAttachment(RootComponent);
 	SphereVisual->SetCanEverAffectNavigation(false);
@@ -26,7 +27,7 @@ AProjectileEye::AProjectileEye()
 		SphereVisual->SetStaticMesh(SphereVisualAsset.Object);
 		SphereVisual->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 		SphereVisual->SetWorldScale3D(FVector(0.4f));
-	}
+	}*/
 
 	//Just ignore this bit
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));

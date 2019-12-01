@@ -9,6 +9,8 @@
 #include "ConfigureInfo.h"
 #include "MonsterTypes.h"
 #include "EnemySpider.h"
+#include "EnemyEye.h"
+#include "EnemyGhost.h"
 #include "MonsterInc.generated.h"
 
 UCLASS(BlueprintType)
@@ -22,6 +24,12 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	TSubclassOf<AEnemySpider> BP_Spider;
+
+	UPROPERTY(BlueprintReadWrite)
+	TSubclassOf<AEnemyEye> BP_Eye;
+
+	UPROPERTY(BlueprintReadWrite)
+	TSubclassOf<AEnemyGhost> BP_Ghost;
 
 protected:
 	// Called when the game starts or when spawned

@@ -15,7 +15,7 @@ AProjectileGhost::AProjectileGhost()
 	RootComponent = CollisionComponent;
 
 	// Create and position a mesh component so we can see the projectiles
-	UStaticMeshComponent* SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
+	/*UStaticMeshComponent* SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
 	SphereVisual->SetupAttachment(RootComponent);
 	SphereVisual->SetCanEverAffectNavigation(false);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereVisualAsset(TEXT("/Game/StarterContent/Shapes/Shape_Sphere.Shape_Sphere"));
@@ -24,7 +24,7 @@ AProjectileGhost::AProjectileGhost()
 		SphereVisual->SetStaticMesh(SphereVisualAsset.Object);
 		SphereVisual->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 		SphereVisual->SetWorldScale3D(FVector(0.4f));
-	}
+	}*/
 
 	UProjectileMovementComponent* ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 	ProjectileMovementComponent->SetUpdatedComponent(CollisionComponent);

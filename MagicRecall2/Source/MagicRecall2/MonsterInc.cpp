@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MonsterInc.h"
 #include "Engine/World.h"
@@ -21,7 +21,15 @@ AMonsterInc::AMonsterInc()
 	static ConstructorHelpers::FObjectFinder<UClass> SpiderBPFinder(TEXT("Blueprint'/Game/Blueprints/Character/BP_Spider.BP_Spider_C'"));
 	BP_Spider= SpiderBPFinder.Object;
 
+	static ConstructorHelpers::FObjectFinder<UClass> EyeBPFinder(TEXT("Blueprint'/Game/Blueprints/Character/BP_Eye.BP_Eye_C'"));
+	BP_Eye = EyeBPFinder.Object;
+
+	static ConstructorHelpers::FObjectFinder<UClass> GhostBPFinder(TEXT("Blueprint'/Game/Blueprints/Character/BP_Ghost.BP_Ghost_C'"));
+	BP_Ghost = GhostBPFinder.Object;
+
 	enum_map["SPIDER"] = MonsterTypes::Spider;
+	enum_map["EYE"] = MonsterTypes::Eye;
+	enum_map["GHOST"] = MonsterTypes::Ghost;
 	// TODO: need to add other types of monsters
 }
 
@@ -41,10 +49,9 @@ void AMonsterInc::Tick(float DeltaTime)
 {
 
 	Super::Tick(DeltaTime);
-
-	fire_function += DeltaTime;
-	if (fire_function > 10) {
-		fire_function = 0;
+	//fire_function += DeltaTime;
+	//if (fire_function > 0) {
+		//fire_function = 0;
 		if (rounds > 0) {
 			bool all_clear = true;
 			if (total_time > max_time || total_num < max_num) {
@@ -52,21 +59,20 @@ void AMonsterInc::Tick(float DeltaTime)
 				for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
 					if (intervals[it.first].nums != 0) {
 						all_clear = false;
-						spawn_boss = false;
 						for (auto i = 0; i < intervals[it.first].nums; i++) {
 							Spawn(it.first);
 							// UE_LOG(LogTemp, Log, TEXT("Spawn"));
 						}
 						intervals[it.first].nums = 0;
-						if (--intervals[it.first].times != 0) {
+						if (--intervals[it.first].times>0) {
 							spawn_boss = false;
 						}
 					}
 				}
 				if (spawn_boss) {
+					UE_LOG(LogTemp, Log, TEXT("Boss"));
 					for (auto i = 0; i < intervals[bossType].nums; i++) {
 						Spawn(bossType);
-						// UE_LOG(LogTemp, Log, TEXT("Spawn"));
 					}
 					for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
 						intervals[it.first].times = Monsters[it.first].times;
@@ -85,7 +91,7 @@ void AMonsterInc::Tick(float DeltaTime)
 				total_time += DeltaTime;
 			}
 		}
-	}
+	//}
 
 }
 
@@ -117,20 +123,35 @@ void AMonsterInc::Configure() {
 void AMonsterInc::Spawn(MonsterTypes type) {
 	total_num += 1;
 	total_time = 0;
+	int random_loc = rand() % boxes.Num();
+	FVector location = FMath::RandPointInBox(boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox());
 	switch (type)
 	{
 	case MonsterTypes::Spider:
 	{
 		UE_LOG(LogTemp, Log, TEXT("Spider"));
-		// std::vector<FVector> locations = Monsters[MonsterTypes::Spider].locations;
-		int random_loc = rand() % boxes.Num();
-		FVector location = FMath::RandPointInBox(boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox());
 		//TODO: probably need to store the pointer
 		AEnemySpider* enemy= static_cast<AEnemySpider*>(GetWorld()->SpawnActor(BP_Spider, &location));
 		
 		break;
 	}
 		//TODO add other monsters
+	case MonsterTypes::Eye:
+	{
+		UE_LOG(LogTemp, Log, TEXT("Eye"));
+		//TODO: probably need to store the pointer
+		AEnemyEye* enemy = static_cast<AEnemyEye*>(GetWorld()->SpawnActor(BP_Eye, &location));
+
+		break;
+	}
+	case MonsterTypes::Ghost:
+	{
+		UE_LOG(LogTemp, Log, TEXT("Ghost"));
+		//TODO: probably need to store the pointer
+		AEnemyGhost* enemy = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
+
+		break;
+	}
 	default:
 		break;
 	}

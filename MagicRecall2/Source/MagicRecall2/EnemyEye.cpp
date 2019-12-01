@@ -53,13 +53,7 @@ void AEnemyEye::attack_Implementation()
 	//MuzzleLocation.Z -= 10;
 	FRotator MuzzleRotation = EyeRotation;
 
-
-	UWorld* World = GetWorld();
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.Owner = this;
-	SpawnParams.Instigator = Instigator;
-
-	AProjectileEye* ProjectileNinetyDegrees = GetWorld()->SpawnActor< AProjectileEye >(Projectile, MuzzleLocation, MuzzleRotation, SpawnParams);
+	AProjectileEye* ProjectileNinetyDegrees = GetWorld()->SpawnActor< AProjectileEye >(Projectile, MuzzleLocation, MuzzleRotation);
 	ProjectileNinetyDegrees->Eye = this;
 	UE_LOG(LogTemp, Log, TEXT("Eye Launches Projectiles"));
 	//UE_LOG(LogTemp, Log, TEXT("%s is attacking"), *GetName());

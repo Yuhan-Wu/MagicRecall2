@@ -10,6 +10,7 @@
 #include <EngineGlobals.h>
 #include "MonsterInc.h"
 #include "EngineUtils.h"
+#include "Engine.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 
 // Sets default values
@@ -24,6 +25,24 @@ AEnemyEye::AEnemyEye()
 	ProjectileMovementComponent->bShouldBounce = true;
 	ProjectileMovementComponent->Bounciness = 0.3f;
 	ProjectileMovementComponent->ProjectileGravityScale = 0;
+	*/
+	timer = 0;
+}
+
+void AEnemyEye::BeginPlay() {
+	Super::BeginPlay();
+
+	GetWorld()->GetTimerManager().SetTimer(handler, this, &AEnemyEye::attack_Implementation, 5, false);
+}
+
+void AEnemyEye::Tick(float delta) {
+	Super::Tick(delta);
+	/*
+	timer += delta;
+	if (timer > 3) {
+		timer = 0;
+		attack_Implementation();
+	}
 	*/
 }
 
@@ -49,14 +68,14 @@ void AEnemyEye::attack_Implementation()
 	GetActorEyesViewPoint(EyeLocation, EyeRotation);
 
 	// To world location
-	FVector MuzzleLocation = EyeLocation; //+ FTransform(GhostRotation).TransformVector(MuzzleOffset);
+	FVector MuzzleLocation = EyeLocation+ FTransform(EyeRotation).TransformVector(FVector(500,500,0)); //+ FTransform(GhostRotation).TransformVector(MuzzleOffset);
 	//MuzzleLocation.Z -= 10;
 	FRotator MuzzleRotation = EyeRotation;
+	MuzzleRotation.Pitch += 30.0f;
 
 	AProjectileEye* ProjectileNinetyDegrees = GetWorld()->SpawnActor< AProjectileEye >(Projectile, MuzzleLocation, MuzzleRotation);
 	ProjectileNinetyDegrees->Eye = this;
 	UE_LOG(LogTemp, Log, TEXT("Eye Launches Projectiles"));
 	//UE_LOG(LogTemp, Log, TEXT("%s is attacking"), *GetName());
-	
 }
 

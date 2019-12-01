@@ -11,6 +11,7 @@ AProjectileEye::AProjectileEye()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
+	CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Enemy_Attack"));
 	CollisionComponent->InitSphereRadius(10.0f);
 	
 
@@ -45,7 +46,7 @@ AProjectileEye::AProjectileEye()
 void AProjectileEye::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Log, TEXT("play_eye"));
+	// UE_LOG(LogTemp, Log, TEXT("play_eye"));
 }
 
 // Called every frame
@@ -54,7 +55,7 @@ void AProjectileEye::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (Eye) {
-		UE_LOG(LogTemp, Log, TEXT("spawn_eye"));
+		// UE_LOG(LogTemp, Log, TEXT("spawn_eye"));
 		// circle around eye
 		FVector NewLocation = Eye->GetActorLocation();//FVector(0, 0, 800);
 

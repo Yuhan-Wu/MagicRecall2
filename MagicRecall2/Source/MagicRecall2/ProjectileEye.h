@@ -33,6 +33,6 @@ private:
 	float Speed = 400;
 	USphereComponent* CollisionComponent;
 	UProjectileMovementComponent* ProjectileMovementComponent;
-	float i = 0.0f;
+	float i = 10.0f;
 	float AngleAxis = 0;
 };

@@ -23,6 +23,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<class AProjectileEye> Projectile;
 
+	float timer;
+	FTimerHandle handler;
+
 public:	
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
@@ -36,4 +39,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void attack();
 	virtual void attack_Implementation() override;
+
+	virtual void Tick(float) override;
+	virtual void BeginPlay() override;
 };

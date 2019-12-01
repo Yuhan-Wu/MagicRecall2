@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ProjectileEye.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Enemy.h"
@@ -18,10 +19,9 @@ public:
 	AEnemyEye();
 
 protected:
-	float Speed = 400;
-	UProjectileMovementComponent* ProjectileMovementComponent;
-	float i = 0.0f;
-	float AngleAxis = 0;
+
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AProjectileEye> Projectile;
 
 public:	
 
@@ -36,7 +36,4 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void attack();
 	virtual void attack_Implementation() override;
-
-	virtual void Tick(float DeltaSeconds) override;
-
 };

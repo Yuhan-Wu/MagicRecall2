@@ -7,10 +7,11 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "GameFramework/RotatingMovementComponent.h"
+#include "Enemy.h"
 #include "ProjectileEye.generated.h"
 
 UCLASS()
-class MAGICRECALL2_API AProjectileEye : public AActor
+class MAGICRECALL2_API AProjectileEye : public AActor, public IEnemy
 {
 	GENERATED_BODY()
 	
@@ -25,6 +26,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	AActor* Eye;
+
 private:
 	float Speed = 400;
 	USphereComponent* CollisionComponent;

@@ -67,10 +67,13 @@ void AMonsterInc::Tick(float DeltaTime)
 						if (--intervals[it.first].times>0) {
 							spawn_boss = false;
 						}
+						if (!(total_time < max_time && total_num < max_num)) {
+							break;
+						}
 					}
 				}
 				if (spawn_boss) {
-					for (auto i = 0; i < intervals[bossType].nums; i++) {
+					for (auto i = 0; i < Monsters[bossType].nums; i++) {
 						UE_LOG(LogTemp, Log, TEXT("Boss"));
 						Spawn(bossType);
 					}
@@ -104,16 +107,21 @@ void AMonsterInc::Configure() {
 			bossType = it.type;
 			rounds = it.rounds;
 			total_num_of_monsters += it.nums * it.rounds;
+			Monsters[it.type] = it;
+			continue;
 		}
 		intervals[it.type] = it;
 		Monsters[it.type] = it;
 		total_num_of_monsters += it.nums * it.times;
 	}
 	for (FConfigureInfo it : twitch_configures) {
+		//TODO: add twitch boss type
 		if (it.isBoss) {
 			bossType = it.type;
 			rounds = it.rounds;
 			total_num_of_monsters += it.nums * it.rounds;
+			twitch_Monsters[it.type] = it;
+			continue;
 		}
 		twitch_intervals[it.type] = it;
 		twitch_Monsters[it.type] = it;
@@ -149,8 +157,17 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 	{
 		UE_LOG(LogTemp, Log, TEXT("Ghost"));
 		//TODO: probably need to store the pointer
-		AEnemyGhost* enemy = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
+		FRotator rot1 = FRotator(0, 180, 0);
+		// FQuat QuatRotation1 = FQuat(rot1);
+		AEnemyGhost* enemy1 = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location,&rot1));
+		// enemy1->AddActorLocalRotation(QuatRotation1);
 
+		/*
+		FRotator rot2 = FRotator(0, -45, 0);
+		FQuat QuatRotation2 = FQuat(rot2);
+		AEnemyGhost* enemy2 = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
+		enemy2->AddActorLocalRotation(QuatRotation2);
+		*/
 		break;
 	}
 	default:

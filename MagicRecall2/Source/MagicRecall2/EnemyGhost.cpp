@@ -37,6 +37,7 @@ void AEnemyGhost::attack_Implementation()
 {
 	//This should shoot projectiles
 	//UE_LOG(LogTemp, Log, TEXT("%s is attacking"), *GetName());// Get location & rotation
+	/*
 	FVector GhostLocation;
 	FRotator GhostRotation;
 	GetActorEyesViewPoint(GhostLocation, GhostRotation);
@@ -57,6 +58,8 @@ void AEnemyGhost::attack_Implementation()
 	FRotator MuzzleRotationNegNinety = GhostRotation.Add(0, -180, 0);
 	AProjectileGhost* ProjectileNegNinetyDegrees = GetWorld()->SpawnActor< AProjectileGhost >(MuzzleLocation, MuzzleRotationNegNinety, SpawnParams);
 	UE_LOG(LogTemp, Log, TEXT("Ghost Launches Projectiles"));
+	*/
+
 }
 
 

@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\MagicRecall2.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{B7DB1AD2-16AB-4DB2-870D-6C90DAEDFBE6}</UniqueIdentifier>
+      <UniqueIdentifier>{A168302E-2466-48A4-BADD-4672B2B0F594}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\MagicRecall2.Target.cs">
       <Filter>Source</Filter>
@@ -13,7 +13,7 @@
     </None>
     <None Include="..\..\.gitignore" />
     <Filter Include="Config">
-      <UniqueIdentifier>{60F6CDF8-3F00-4151-BA7A-AAB75D38F5BD}</UniqueIdentifier>
+      <UniqueIdentifier>{5FBC2FFA-2FA0-438C-A4D7-2CEE67872160}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -34,7 +34,7 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\MagicRecall2">
-      <UniqueIdentifier>{61410E7F-9CF2-422E-9B39-5390B8B5FC8B}</UniqueIdentifier>
+      <UniqueIdentifier>{EA74DB6E-45AC-4370-9365-0BF70F7B0A50}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\MagicRecall2\Bonfire.cpp">
       <Filter>Source\MagicRecall2</Filter>

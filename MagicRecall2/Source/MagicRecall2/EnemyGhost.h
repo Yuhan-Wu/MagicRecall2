@@ -3,12 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
+#include "GameFramework/Character.h"
 #include "Enemy.h"
 #include "EnemyGhost.generated.h"
 
 UCLASS()
-class MAGICRECALL2_API AEnemyGhost : public APawn, public IEnemy
+class MAGICRECALL2_API AEnemyGhost : public ACharacter, public IEnemy
 {
 	GENERATED_BODY()
 

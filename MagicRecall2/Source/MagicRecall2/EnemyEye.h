@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 #include "Enemy.h"
 #include "EnemyEye.generated.h"
 
@@ -17,6 +18,10 @@ public:
 	AEnemyEye();
 
 protected:
+	float Speed = 400;
+	UProjectileMovementComponent* ProjectileMovementComponent;
+	float i = 0.0f;
+	float AngleAxis = 0;
 
 public:	
 
@@ -31,5 +36,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void attack();
 	virtual void attack_Implementation() override;
+
+	virtual void Tick(float DeltaSeconds) override;
 
 };

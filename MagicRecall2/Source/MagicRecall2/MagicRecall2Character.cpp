@@ -227,6 +227,7 @@ void AMagicRecall2Character::TakeDamage(int damage) {
 			block_attack=true;
 			GetWorld()->GetTimerManager().SetTimer(handler, this, &AMagicRecall2Character::ShieldDisappear, 2, false);
 			// TODO: add shield, probably also need to remove timer???
+			// TODO: remove collision with the fireballs
 		}
 	}
 }

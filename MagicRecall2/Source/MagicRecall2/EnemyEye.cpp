@@ -16,7 +16,43 @@
 // Sets default values
 AEnemyEye::AEnemyEye()
 {
+	/*
+	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
+	ProjectileMovementComponent->SetUpdatedComponent((USceneComponent *)GetCapsuleComponent());
+	ProjectileMovementComponent->InitialSpeed = 0;
+	ProjectileMovementComponent->MaxSpeed = Speed*2;
+	ProjectileMovementComponent->bRotationFollowsVelocity = true;
+	ProjectileMovementComponent->bShouldBounce = true;
+	ProjectileMovementComponent->Bounciness = 0.3f;
+	ProjectileMovementComponent->ProjectileGravityScale = 0;
+	*/
+}
 
+void AEnemyEye::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+
+	FVector NewLocation = this->GetActorLocation();//FVector(0, 0, 800);
+
+	// radius increases
+	FVector Radius = FVector(i, 0, 0);
+
+	// angle increases by 1 every frame
+	AngleAxis += 1.5;
+
+	// prevent number from growind indefinitely
+	if (AngleAxis > 360.0f) {
+
+		AngleAxis = 1;
+	}
+
+	FVector RotateValue = Radius.RotateAngleAxis(AngleAxis, FVector(0, 0, 1));
+
+	NewLocation.X += RotateValue.X;
+	NewLocation.Y += RotateValue.Y;
+	NewLocation.Z += RotateValue.Z;
+
+	SetActorLocation(NewLocation);
+	i += .04;
 }
 
 void AEnemyEye::move_Implementation()
@@ -35,6 +71,7 @@ void AEnemyEye::receiveDamage_Implementation()
 
 void AEnemyEye::attack_Implementation()
 {
+	/*
 	//Add complex projectiles
 	FVector EyeLocation;
 	FRotator EyeRotation;
@@ -57,5 +94,28 @@ void AEnemyEye::attack_Implementation()
 	//AProjectileEye* ProjectileNegNinetyDegrees = GetWorld()->SpawnActor< AProjectileGhost >(MuzzleLocation, MuzzleRotationNegNinety, SpawnParams);
 	UE_LOG(LogTemp, Log, TEXT("Eye Launches Projectiles"));
 	//UE_LOG(LogTemp, Log, TEXT("%s is attacking"), *GetName());
+	*/
+	FVector NewLocation = this->GetActorLocation();//FVector(0, 0, 800);
+
+	// radius increases
+	FVector Radius = FVector(i, 0, 0);
+
+	// angle increases by 1 every frame
+	AngleAxis += 1.5;
+
+	// prevent number from growind indefinitely
+	if (AngleAxis > 360.0f) {
+
+		AngleAxis = 1;
+	}
+
+	FVector RotateValue = Radius.RotateAngleAxis(AngleAxis, FVector(0, 0, 1));
+
+	NewLocation.X += RotateValue.X;
+	NewLocation.Y += RotateValue.Y;
+	NewLocation.Z += RotateValue.Z;
+
+	SetActorLocation(NewLocation);
+	i += .04;
 }
 

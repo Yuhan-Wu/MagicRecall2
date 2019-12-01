@@ -50,7 +50,7 @@ void AMonsterInc::Tick(float DeltaTime)
 
 	Super::Tick(DeltaTime);
 	//fire_function += DeltaTime;
-	//if (fire_function > 0) {
+	//if (fire_function > 2) {
 		//fire_function = 0;
 		if (rounds > 0) {
 			bool all_clear = true;
@@ -70,8 +70,8 @@ void AMonsterInc::Tick(float DeltaTime)
 					}
 				}
 				if (spawn_boss) {
-					UE_LOG(LogTemp, Log, TEXT("Boss"));
 					for (auto i = 0; i < intervals[bossType].nums; i++) {
+						UE_LOG(LogTemp, Log, TEXT("Boss"));
 						Spawn(bossType);
 					}
 					for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
@@ -91,6 +91,9 @@ void AMonsterInc::Tick(float DeltaTime)
 				total_time += DeltaTime;
 			}
 		}
+		else {
+			//TODO: next level
+		}
 	//}
 
 }
@@ -101,7 +104,6 @@ void AMonsterInc::Configure() {
 			bossType = it.type;
 			rounds = it.rounds;
 			total_num_of_monsters += it.nums * it.rounds;
-			break;
 		}
 		intervals[it.type] = it;
 		Monsters[it.type] = it;
@@ -112,7 +114,6 @@ void AMonsterInc::Configure() {
 			bossType = it.type;
 			rounds = it.rounds;
 			total_num_of_monsters += it.nums * it.rounds;
-			break;
 		}
 		twitch_intervals[it.type] = it;
 		twitch_Monsters[it.type] = it;

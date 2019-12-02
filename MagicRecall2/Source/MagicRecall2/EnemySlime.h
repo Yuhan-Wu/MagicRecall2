@@ -8,7 +8,7 @@
 #include "EnemySlime.generated.h"
 
 UCLASS()
-class MAGICRECALL2_API AEnemySlime : public ACharacter, public IEnemy
+class MAGICRECALL2_API AEnemySlime : public APawn, public IEnemy
 {
 	GENERATED_BODY()
 

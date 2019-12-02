@@ -9,7 +9,7 @@
 #include "EnemyGhost.generated.h"
 
 UCLASS()
-class MAGICRECALL2_API AEnemyGhost : public ACharacter, public IEnemy
+class MAGICRECALL2_API AEnemyGhost : public APawn, public IEnemy
 {
 	GENERATED_BODY()
 

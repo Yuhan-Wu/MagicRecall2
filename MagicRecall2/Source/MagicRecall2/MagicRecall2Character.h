@@ -115,6 +115,5 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	bool block_attack;
-
 };
 

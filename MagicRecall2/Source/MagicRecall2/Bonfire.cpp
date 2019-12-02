@@ -3,6 +3,9 @@
 
 #include "Bonfire.h"
 #include "EnemySlime.h"
+#include "Engine/World.h"
+#include "EngineUtils.h"
+#include "GameFramework/PlayerController.h"
 
 // Sets default values
 ABonfire::ABonfire()
@@ -21,6 +24,8 @@ void ABonfire::BeginPlay()
 {
 	Super::BeginPlay();
 	CollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &ABonfire::OnOverlap);
+	particles = Cast<UParticleSystemComponent>(GetComponentByClass(UParticleSystemComponent::StaticClass()));
+	particles->DeactivateSystem();
 }
 
 // Called every frame
@@ -36,14 +41,24 @@ void ABonfire::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		isLit = true;
 		AMagicRecall2Character* wizard = Cast<AMagicRecall2Character>(OtherActor);
 		wizard->PowerUp();
+		particles->ActivateSystem();
 		// UE_LOG(LogTemp, Log, TEXT("POWERUP"));
 		// TODO: light it up ->TA
 	}
 	else if (OtherActor != this && Cast<AEnemySlime>(OtherActor) && isLit) {
 		// TODO: deal with slime
 		isLit = false;
-		AMagicRecall2Character* wizard = Cast<AMagicRecall2Character>(GetWorld()->GetFirstPlayerController());
-		wizard->BackToMuggle();
+
+		for (TActorIterator<AMagicRecall2Character> wizard(GetWorld()); wizard; ++wizard)
+		{
+			// Same as with the Object Iterator, access the subclass instance with the * or -> operators.
+			if (wizard) {
+				wizard->BackToMuggle();
+				AEnemySlime* slime = Cast<AEnemySlime>(OtherActor);
+				slime->Destroy();
+				particles->DeactivateSystem();
+			}
+		}
 	}
 }
 

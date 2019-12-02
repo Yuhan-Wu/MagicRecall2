@@ -200,6 +200,7 @@ int AMagicRecall2Character::PowerUp() {
 }
 
 int AMagicRecall2Character::BackToMuggle() {
+	UE_LOG(LogTemp, Log, TEXT("decrease"));
 	if (level > 0) {
 		level--;
 	}

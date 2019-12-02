@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Components/AudioComponent.h"
 #include <vector>
 #include "MagicRecall2Character.generated.h"
 
@@ -29,6 +30,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		int health;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		UAudioComponent* AudioComponent;
+
 	// Fireballs
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<class AFireBall> Fireballs;
@@ -37,7 +41,9 @@ public:
 		bool GetAttackingState() { return bAttacking; }
 
 	UFUNCTION(BlueprintCallable) FORCEINLINE
-		bool GetHittingState() { return block_attack; }
+		bool GetHittingState() { return block_attack;
+	
+}
 
 protected:
 

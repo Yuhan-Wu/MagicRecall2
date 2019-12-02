@@ -38,6 +38,8 @@ AMagicRecall2Character::AMagicRecall2Character()
 
 	health = 5;
 
+	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -153,6 +155,7 @@ void AMagicRecall2Character::Mahou() {
 	if (Fireballs)
 	{
 		bAttacking = true;
+		AudioComponent->Play();
 		UE_LOG(LogTemp, Log, TEXT("Fireball_success"));
 		// Get location & rotation
 		FVector WizardLocation;

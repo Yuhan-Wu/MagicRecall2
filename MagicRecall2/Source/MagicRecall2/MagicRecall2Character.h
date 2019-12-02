@@ -11,14 +11,6 @@ UCLASS(config=Game)
 class AMagicRecall2Character : public ACharacter
 {
 	GENERATED_BODY()
-
-	/** Camera boom positioning the camera behind the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
-
-	/** Follow camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* FollowCamera;
 public:
 	AMagicRecall2Character();
 
@@ -40,6 +32,12 @@ public:
 	// Fireballs
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<class AFireBall> Fireballs;
+
+	UFUNCTION(BlueprintCallable) FORCEINLINE
+		bool GetAttackingState() { return bAttacking; }
+
+	UFUNCTION(BlueprintCallable) FORCEINLINE
+		bool GetHittingState() { return block_attack; }
 
 protected:
 
@@ -94,10 +92,6 @@ protected:
 	FTimerHandle handler;
 
 public:
-	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-	/** Returns FollowCamera subobject **/
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 	// Magic Recall functions
 	void MahouCast();
@@ -113,10 +107,8 @@ public:
 
 	void TakeDamage(int damage);
 
-	UPROPERTY(BlueprintReadOnly)
 	bool bAttacking;
 
-	UPROPERTY(BlueprintReadOnly)
 	bool block_attack;
 };
 

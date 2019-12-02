@@ -57,6 +57,9 @@ void AEnemyEye::receiveDamage_Implementation()
 	{
 		It->MonsterNumDecrease();
 	}
+	for (AProjectileEye* pro : bullets) {
+		pro->Eye = nullptr;
+	}
 	Destroy();
 }
 
@@ -75,6 +78,7 @@ void AEnemyEye::attack_Implementation()
 
 	AProjectileEye* ProjectileNinetyDegrees = GetWorld()->SpawnActor< AProjectileEye >(Projectile, MuzzleLocation, MuzzleRotation);
 	ProjectileNinetyDegrees->Eye = this;
+	bullets.push_back(ProjectileNinetyDegrees);
 	UE_LOG(LogTemp, Log, TEXT("Eye Launches Projectiles"));
 	//UE_LOG(LogTemp, Log, TEXT("%s is attacking"), *GetName());
 }

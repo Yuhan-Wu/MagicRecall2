@@ -7,6 +7,8 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Enemy.h"
+#include "ProjectileEye.h"
+#include <vector>
 #include "EnemyEye.generated.h"
 
 UCLASS()
@@ -25,6 +27,8 @@ protected:
 
 	float timer;
 	FTimerHandle handler;
+
+	std::vector<AProjectileEye*> bullets;
 
 public:	
 

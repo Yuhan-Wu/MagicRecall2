@@ -2,6 +2,9 @@
 
 
 #include "ProjectileGhost.h"
+#include "CoreMinimal.h"
+#include "Engine.h"
+#include "Components/StaticMeshComponent.h"
 
 // Sets default values
 AProjectileGhost::AProjectileGhost()
@@ -10,9 +13,21 @@ AProjectileGhost::AProjectileGhost()
 	PrimaryActorTick.bCanEverTick = true;
 	USphereComponent* CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 	CollisionComponent->InitSphereRadius(10.0f);
-	CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("ProjectileGhost"));
+	CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Enemy_Attack"));
 
 	RootComponent = CollisionComponent;
+
+	// Create and position a mesh component so we can see the projectiles
+	UStaticMeshComponent* SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
+	SphereVisual->SetupAttachment(RootComponent);
+	SphereVisual->SetCanEverAffectNavigation(false);
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereVisualAsset(TEXT("/Game/StarterContent/Shapes/Shape_Sphere.Shape_Sphere"));
+	if (SphereVisualAsset.Succeeded())
+	{
+		SphereVisual->SetStaticMesh(SphereVisualAsset.Object);
+		SphereVisual->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+		SphereVisual->SetWorldScale3D(FVector(0.4f));
+	}
 
 	UProjectileMovementComponent* ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 	ProjectileMovementComponent->SetUpdatedComponent(CollisionComponent);

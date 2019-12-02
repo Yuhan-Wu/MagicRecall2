@@ -27,9 +27,13 @@ AMonsterInc::AMonsterInc()
 	static ConstructorHelpers::FObjectFinder<UClass> GhostBPFinder(TEXT("Blueprint'/Game/Blueprints/Character/BP_Ghost.BP_Ghost_C'"));
 	BP_Ghost = GhostBPFinder.Object;
 
+	static ConstructorHelpers::FObjectFinder<UClass> SlimeBPFinder(TEXT("Blueprint'/Game/Blueprints/Character/BP_Slime.BP_Slime_C'"));
+	BP_Slime = SlimeBPFinder.Object;
+
 	enum_map["SPIDER"] = MonsterTypes::Spider;
 	enum_map["EYE"] = MonsterTypes::Eye;
 	enum_map["GHOST"] = MonsterTypes::Ghost;
+	enum_map["SLIME"] = MonsterTypes::Slime;
 	// TODO: need to add other types of monsters
 }
 
@@ -159,7 +163,7 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 		//TODO: probably need to store the pointer
 		FRotator rot1 = FRotator(0, 180, 0);
 		// FQuat QuatRotation1 = FQuat(rot1);
-		AEnemyGhost* enemy1 = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location,&rot1));
+		AEnemyGhost* enemy1 = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
 		// enemy1->AddActorLocalRotation(QuatRotation1);
 
 		/*
@@ -168,6 +172,19 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 		AEnemyGhost* enemy2 = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
 		enemy2->AddActorLocalRotation(QuatRotation2);
 		*/
+		break;
+	}
+	case MonsterTypes::Slime:
+	{
+		UE_LOG(LogTemp, Log, TEXT("Slime"));
+		//TODO: probably need to store the pointer
+		// FQuat QuatRotation1 = FQuat(rot1);
+		if (BP_Slime == NULL) {
+			UE_LOG(LogTemp, Log, TEXT("BAD INITIALIZATION"));
+		}
+		AEnemySlime* enemy = static_cast<AEnemySlime*>(GetWorld()->SpawnActor(BP_Slime, &location));
+		// enemy1->AddActorLocalRotation(QuatRotation1);
+
 		break;
 	}
 	default:

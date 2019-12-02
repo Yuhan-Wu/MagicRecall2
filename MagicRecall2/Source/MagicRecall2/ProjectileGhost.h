@@ -6,10 +6,11 @@
 #include "GameFramework/Actor.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Enemy.h"
 #include "ProjectileGhost.generated.h"
 
 UCLASS()
-class MAGICRECALL2_API AProjectileGhost : public AActor
+class MAGICRECALL2_API AProjectileGhost : public AActor, public IEnemy
 {
 	GENERATED_BODY()
 	

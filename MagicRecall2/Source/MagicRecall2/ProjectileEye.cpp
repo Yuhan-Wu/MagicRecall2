@@ -57,6 +57,7 @@ void AProjectileEye::Tick(float DeltaTime)
 	if (Eye) {
 		// UE_LOG(LogTemp, Log, TEXT("spawn_eye"));
 		// circle around eye
+		spawned = true;
 		FVector NewLocation = Eye->GetActorLocation();//FVector(0, 0, 800);
 
 		// radius increases
@@ -79,6 +80,9 @@ void AProjectileEye::Tick(float DeltaTime)
 
 		SetActorLocation(NewLocation);
 		i += .04;
+	}
+	else if (spawned) {
+		Destroy();
 	}
 }
 

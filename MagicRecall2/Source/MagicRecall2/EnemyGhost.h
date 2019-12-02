@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Enemy.h"
+#include "ProjectileGhost.h"
 #include "EnemyGhost.generated.h"
 
 UCLASS()
@@ -17,7 +18,10 @@ public:
 	AEnemyGhost();
 
 protected:
+	FTimerHandle handler;
 
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AProjectileGhost> Projectile;
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void move();
@@ -30,4 +34,6 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void attack();
 	virtual void attack_Implementation() override;
+
+	virtual void BeginPlay() override;
 };

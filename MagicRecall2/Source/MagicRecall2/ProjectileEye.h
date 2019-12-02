@@ -35,4 +35,6 @@ private:
 	UProjectileMovementComponent* ProjectileMovementComponent;
 	float i = 10.0f;
 	float AngleAxis = 0;
+
+	bool spawned = false;
 };

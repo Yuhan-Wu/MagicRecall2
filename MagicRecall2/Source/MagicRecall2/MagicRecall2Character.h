@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Particles/ParticleSystemComponent.h"
+
+#include "Components/AudioComponent.h"
+
 #include <vector>
 #include "MagicRecall2Character.generated.h"
 
@@ -34,6 +37,8 @@ public:
 
 	UFUNCTION()
 	void OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		UAudioComponent* AudioComponent;
 
 	// Fireballs
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
@@ -43,7 +48,9 @@ public:
 		bool GetAttackingState() { return bAttacking; }
 
 	UFUNCTION(BlueprintCallable) FORCEINLINE
-		bool GetHittingState() { return block_attack; }
+		bool GetHittingState() { return block_attack;
+	
+}
 
 protected:
 

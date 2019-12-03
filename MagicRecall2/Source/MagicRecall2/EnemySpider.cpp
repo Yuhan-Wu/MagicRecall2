@@ -54,5 +54,6 @@ void AEnemySpider::receiveDamage_Implementation()
 
 void AEnemySpider::attack_Implementation()
 {
+	m_bAttacking = true;
 	UE_LOG(LogTemp, Log, TEXT("%s is attacking %s"), *GetName(), *getAttackTarget()->GetName());
 }

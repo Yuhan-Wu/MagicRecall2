@@ -32,5 +32,9 @@ public:
 		void attack();
 		virtual void attack_Implementation() override;
 
+	UFUNCTION(BlueprintCallable) FORCEINLINE
+		bool GetAttackingState() {return m_bAttacking;}
 
+private:
+	bool m_bAttacking;
 };

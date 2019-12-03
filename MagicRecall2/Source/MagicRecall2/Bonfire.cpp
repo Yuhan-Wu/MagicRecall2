@@ -48,7 +48,7 @@ void ABonfire::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 	else if (OtherActor != this && Cast<AEnemySlime>(OtherActor)) {
 		// TODO: deal with slime
 		AEnemySlime* slime = Cast<AEnemySlime>(OtherActor);
-		slime->Destroy();
+		slime->receiveDamage();
 		if (isLit) {
 			isLit = false;
 			for (TActorIterator<AMagicRecall2Character> wizard(GetWorld()); wizard; ++wizard)

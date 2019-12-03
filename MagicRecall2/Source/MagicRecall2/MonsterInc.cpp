@@ -132,7 +132,7 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 	total_time = 0;
 	int random_loc = rand() % boxes.Num();
 	FVector location = FMath::RandPointInBox(boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox());
-
+	location.Z = boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox().GetCenter().Z;
 	switch (type)
 	{
 	case MonsterTypes::Spider:

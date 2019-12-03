@@ -57,18 +57,19 @@ void AMonsterInc::Tick(float DeltaTime)
 		//fire_function = 0;
 		if (rounds > 0) {
 			bool all_clear = true;
-			if (total_time > max_time || total_num < max_num) {
-				bool spawn_boss = true;
+			if (total_time < max_time || total_num < max_num) {
+				bool spawn_boss = true; //don't spawn boss
 				for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
-					if (intervals[it.first].nums != 0) {
+					//spawn_boss = true; //possibility of spawning boss
+					if (intervals[it.first].times != 0) {
 						all_clear = false;
 						for (auto i = 0; i < intervals[it.first].nums; i++) {
 							Spawn(it.first);
 							// UE_LOG(LogTemp, Log, TEXT("Spawn"));
 						}
-						intervals[it.first].nums = 0;
-						if (--intervals[it.first].times>0) {
-							spawn_boss = false;
+						//intervals[it.first].nums = 0;
+						if (--intervals[it.first].times > 0) {
+							spawn_boss = false; //don't spawn boss if we want to spawn enemies again
 						}
 						if (!(total_time < max_time && total_num < max_num)) {
 							break;
@@ -120,20 +121,21 @@ void AMonsterInc::Configure() {
 		Monsters[it.type] = FConfigureInfo(it);
 		temp += it.nums * it.times;
 	}
+	max_num = temp;
 	total_num_of_monsters += temp * rounds;
 	for (FConfigureInfo it : twitch_configures) {
 		//TODO: add twitch boss type
 		// no boss for twitch
 		twitch_intervals[it.type] = FConfigureInfo(it);
 		twitch_Monsters[it.type] = FConfigureInfo(it);
-		total_num_of_monsters += it.nums * it.times;
+		//removed twitch monsters adding to monster count - not sure what intended behavior was
+		//total_num_of_monsters += it.nums * it.times;
 	}
 }
 
 void AMonsterInc::Spawn(MonsterTypes type) {
 	total_num += 1;
 	total_time = 0;
-	total_num_of_monsters--;
 	int random_loc = rand() % boxes.Num();
 	FVector location = FMath::RandPointInBox(boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox());
 
@@ -193,7 +195,10 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 
 //TODO: PLEASE CALL THIS FUNCTION BEFORE MONSTER DIES
 void AMonsterInc::MonsterNumDecrease() {
-	if (total_num > 0) total_num--;
+	if (total_num > 0) {
+		total_num--;
+	}
+	total_num_of_monsters--;
 }
 
 //TODO: need to create a new interval map for twitch

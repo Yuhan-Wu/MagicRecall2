@@ -14,24 +14,12 @@
 #include "MagicRecall2Character.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 
+int AEnemySpider::Spider_Num = 0;
 
 
 // Sets default values
 AEnemySpider::AEnemySpider()
 {
-	//setMoveTarget(UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation());
-	//setMoveTarget(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
-	//GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
-	//setMoveTarget();
-	//setMoveTarget(UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation());
-	
-
-	//Creates a placeholder sphere for spiders
-	/*USphereComponent* SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent"));
-	RootComponent = SphereComponent;
-	SphereComponent->InitSphereRadius(40.0f);
-	SphereComponent->SetCollisionProfileName(TEXT("Pawn"));
-	SphereComponent->SetCanEverAffectNavigation(false);*/
 
 }
 
@@ -50,6 +38,7 @@ void AEnemySpider::receiveDamage_Implementation()
 	{
 		It->MonsterNumDecrease();
 	}
+	Spider_Num--;
 	Destroy();
 }
 
@@ -73,4 +62,9 @@ void AEnemySpider::attack_Implementation()
 		}
 		break;
 	}
+}
+
+void AEnemySpider::PlaySound() {
+	UAudioComponent* audio = Cast<UAudioComponent>(GetComponentByClass(UAudioComponent::StaticClass()));
+	audio->Play();
 }

@@ -34,7 +34,7 @@ AEnemyEye::AEnemyEye()
 
 void AEnemyEye::BeginPlay() {
 	Super::BeginPlay();
-
+	
 	// TODO: soud effect
 	GetWorld()->GetTimerManager().SetTimer(handler, this, &AEnemyEye::attack_Implementation, 5, true);
 }
@@ -64,6 +64,7 @@ void AEnemyEye::receiveDamage_Implementation()
 	for (AProjectileEye* pro : bullets) {
 		pro->Eye = nullptr;
 	}
+	Eye_Num--;
 	Destroy();
 }
 
@@ -85,5 +86,10 @@ void AEnemyEye::attack_Implementation()
 	bullets.push_back(ProjectileNinetyDegrees);
 	UE_LOG(LogTemp, Log, TEXT("Eye Launches Projectiles"));
 	//UE_LOG(LogTemp, Log, TEXT("%s is attacking"), *GetName());
+}
+
+void AEnemyEye::PlaySound() {
+	UAudioComponent* audio = Cast<UAudioComponent>(GetComponentByClass(UAudioComponent::StaticClass()));
+	audio->Play();
 }
 

@@ -57,23 +57,18 @@ void AMonsterInc::Tick(float DeltaTime)
 		//fire_function = 0;
 		if (rounds > 0) {
 			bool all_clear = true;
-			if (total_time < max_time || total_num < max_num) {
-				bool spawn_boss = true; //don't spawn boss
-				for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
-					//spawn_boss = true; //possibility of spawning boss
-					if (intervals[it.first].times != 0) {
+			if (total_time < max_time && total_num < max_num) { //If within the time limit and there are < max_num monsters on the board, we can spawn monsters
+				bool spawn_boss = true;
+				for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) { //For each monster type
+					if (intervals[it.first].times != 0) { //If there is another group of monsters yet to spawn
 						all_clear = false;
-						if (total_time > max_time || total_num < max_num) {
+						spawn_boss = false; //Don't spawn the boss yet
+						if (total_time < max_time && total_num + intervals[it.first].nums <= max_num) { //If we are within the time limit and the total_num + the monsters we will spawn is below the max num
 							for (auto i = 0; i < intervals[it.first].nums; i++) {
-								Spawn(it.first);
-								// UE_LOG(LogTemp, Log, TEXT("Spawn"));
+								Spawn(it.first); //Spawn num number of monsters
 							}
-							intervals[it.first].nums = 0;
-							--intervals[it.first].times;
+							--intervals[it.first].times; //Record this group of monsters has spawned							
 						}
-					}
-					if (intervals[it.first].times > 0) {
-						spawn_boss = false;
 					}
 				}
 				if (spawn_boss) {
@@ -85,8 +80,8 @@ void AMonsterInc::Tick(float DeltaTime)
 						intervals[it.first].nums = Monsters[it.first].nums;
 						intervals[it.first].times = Monsters[it.first].times;
 					}
-					max_num += 2;
-					max_time -= 2;
+					max_num += 2; //For the next round, more monsters at once
+					max_time -= 2; //and less time
 					rounds--;
 				}
 				if (all_clear) {
@@ -121,7 +116,6 @@ void AMonsterInc::Configure() {
 		Monsters[it.type] = FConfigureInfo(it);
 		temp += it.nums * it.times;
 	}
-	max_num = temp;
 	total_num_of_monsters += temp * rounds;
 	for (FConfigureInfo it : twitch_configures) {
 		//TODO: add twitch boss type

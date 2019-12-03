@@ -20,6 +20,8 @@ public:
 	// Sets default values for this pawn's properties
 	AEnemyEye();
 
+	static int Eye_Num;
+
 protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)

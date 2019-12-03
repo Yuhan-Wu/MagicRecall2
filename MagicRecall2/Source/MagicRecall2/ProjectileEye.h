@@ -31,9 +31,15 @@ public:
 
 private:
 	float Speed = 400;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	USphereComponent* CollisionComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UStaticMeshComponent* SphereVisual;
+
 	UProjectileMovementComponent* ProjectileMovementComponent;
-	float i = 10.0f;
+	float i = 30.0f;
 	float AngleAxis = 0;
 
 	bool spawned = false;

@@ -26,6 +26,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	USphereComponent* CollisionComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UStaticMeshComponent* SphereVisual;
+
 private:
 	float Speed = 400;
 

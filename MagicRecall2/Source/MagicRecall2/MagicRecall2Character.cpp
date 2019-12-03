@@ -1,8 +1,13 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 #include "MagicRecall2Character.h"
 #include <vector>
+#include <mutex>
 #include "Engine.h"
 #include "FireBall.h"
+#include "Enemy.h"
+#include "EnemySlime.h"
+#include "EnemyGhost.h"
+#include "EnemySpider.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -13,6 +18,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // AMagicRecall2Character
+std::mutex mtx;
 
 AMagicRecall2Character::AMagicRecall2Character()
 {
@@ -36,12 +42,33 @@ AMagicRecall2Character::AMagicRecall2Character()
 
 	block_attack = false;
 
-	health = 5;
+	shield_timer = 0;
 
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
 
+	hp = 10;
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+}
+
+void AMagicRecall2Character::BeginPlay() {
+	Super::BeginPlay();
+	particles = Cast<UParticleSystemComponent>(GetComponentByClass(UParticleSystemComponent::StaticClass()));
+	particles->DeactivateSystem();
+
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMagicRecall2Character::OnOverlap);
+}
+
+void AMagicRecall2Character::Tick(float delta) {
+	Super::Tick(delta);
+	if (block_attack) {
+		shield_timer += delta;
+		if (shield_timer > 2) {
+			ShieldDisappear();
+			shield_timer = 0;
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -203,6 +230,7 @@ int AMagicRecall2Character::PowerUp() {
 }
 
 int AMagicRecall2Character::BackToMuggle() {
+	// UE_LOG(LogTemp, Log, TEXT("decrease"));
 	if (level > 0) {
 		level--;
 	}
@@ -210,21 +238,40 @@ int AMagicRecall2Character::BackToMuggle() {
 }
 
 void AMagicRecall2Character::TakeDamage(int damage) {
+	mtx.lock();
 	if (!block_attack) {
 		hp -= damage;
 		if (hp <= 0) {
-			// TODO die
+			// TODO: die
 		}
 		else {
-			block_attack=true;
-			GetWorld()->GetTimerManager().SetTimer(handler, this, &AMagicRecall2Character::ShieldDisappear, 2, false);
-			// TODO: add shield, probably also need to remove timer???
+			block_attack = true;
+			UE_LOG(LogTemp, Log, TEXT("shield on"));
+			particles->ActivateSystem();
+			// GetWorld()->GetTimerManager().SetTimer(handler, this, &AMagicRecall2Character::ShieldDisappear, 1, false);
+			// TODO: probably also need to remove timer???
 			// TODO: remove collision with the fireballs
+		}
+	}
+	mtx.unlock();
+ }
+
+void AMagicRecall2Character::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+	UE_LOG(LogTemp, Log, TEXT("yup"));
+	if (OtherActor != this && Cast<IEnemy>(OtherActor)) {
+		if (!Cast<AEnemySlime>(OtherActor) && !Cast<AEnemyGhost>(OtherActor) && !Cast<AEnemySpider>(OtherActor)) {
+			// UE_LOG(LogTemp, Log, TEXT("yup"));
+			TakeDamage(1);
+			OtherActor->Destroy();
 		}
 	}
 }
 
 void AMagicRecall2Character::ShieldDisappear() {
+	UE_LOG(LogTemp, Log, TEXT("remove"));
+	mtx.lock();
 	block_attack = false;
-	// TODO: remove shield
+	particles->DeactivateSystem();
+	// GetWorld()->GetTimerManager().ClearTimer(handler);
+	mtx.unlock();
 }

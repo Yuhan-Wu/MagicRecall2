@@ -18,7 +18,7 @@ AProjectileEye::AProjectileEye()
 	RootComponent = CollisionComponent;
 
 	// Create and position a mesh component so we can see the projectiles
-	UStaticMeshComponent* SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
+	SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
 	SphereVisual->SetupAttachment(RootComponent);
 	SphereVisual->SetCanEverAffectNavigation(false);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereVisualAsset(TEXT("/Game/StarterContent/Shapes/Shape_Sphere.Shape_Sphere"));
@@ -64,7 +64,7 @@ void AProjectileEye::Tick(float DeltaTime)
 		FVector Radius = FVector(i, 0, 0);
 
 		// angle increases by 1 every frame
-		AngleAxis += 1.5;
+		AngleAxis += 2;
 
 		// prevent number from growind indefinitely
 		if (AngleAxis > 360.0f) {
@@ -79,7 +79,7 @@ void AProjectileEye::Tick(float DeltaTime)
 		NewLocation.Z += RotateValue.Z;
 
 		SetActorLocation(NewLocation);
-		i += .04;
+		i += .05;
 	}
 	else if (spawned) {
 		Destroy();

@@ -21,7 +21,7 @@ AEnemyGhost::AEnemyGhost()
 
 void AEnemyGhost::BeginPlay() {
 	Super::BeginPlay();
-	GetWorld()->GetTimerManager().SetTimer(handler, this, &AEnemyGhost::attack_Implementation, 5, false);
+	GetWorld()->GetTimerManager().SetTimer(handler, this, &AEnemyGhost::attack_Implementation, 2, true);
 }
 
 void AEnemyGhost::move_Implementation()

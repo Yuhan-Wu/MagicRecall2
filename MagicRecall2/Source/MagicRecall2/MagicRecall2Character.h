@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Particles/ParticleSystemComponent.h"
+
 #include "Components/AudioComponent.h"
+
 #include <vector>
 #include "MagicRecall2Character.generated.h"
 
@@ -14,6 +17,10 @@ class AMagicRecall2Character : public ACharacter
 	GENERATED_BODY()
 public:
 	AMagicRecall2Character();
+
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float) override;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -27,9 +34,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	FVector MuzzleOffset;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		int health;
-
+	UFUNCTION()
+	void OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		UAudioComponent* AudioComponent;
 
@@ -86,16 +92,17 @@ protected:
 	std::vector<float> Angles{ -60 , 0, 60};
 
 	// Power up
-	std::vector<float> DistanceLevel{500,800,1000};
-	std::vector<float> SpeedLevel{500,800,1000};
+	std::vector<float> DistanceLevel{600,800,1000};
+	std::vector<float> SpeedLevel{600,1000,1400};
 	int level=0;
 	int numOfFireballs = 3;
 	float cosValue = 0.5f;
 
-	int hp = 100;
-
-
 	FTimerHandle handler;
+
+	UParticleSystemComponent* particles;
+
+	float shield_timer;
 
 public:
 
@@ -111,10 +118,15 @@ public:
 	int PowerUp();
 	int BackToMuggle();
 
+	UFUNCTION()
 	void TakeDamage(int damage);
 
 	bool bAttacking;
 
 	bool block_attack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	int hp;
+
 };
 

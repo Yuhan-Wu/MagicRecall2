@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "MagicRecall2Character.h"
 #include "Components/BoxComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Bonfire.generated.h"
 
 UCLASS(BlueprintType)
@@ -22,6 +23,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	bool isLit = false;
+
+	UParticleSystemComponent* particles;
 
 public:	
 	// Called every frame

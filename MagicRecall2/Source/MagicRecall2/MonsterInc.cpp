@@ -133,7 +133,6 @@ void AMonsterInc::Configure() {
 void AMonsterInc::Spawn(MonsterTypes type) {
 	total_num += 1;
 	total_time = 0;
-	total_num_of_monsters--;
 	int random_loc = rand() % boxes.Num();
 	FVector location = FMath::RandPointInBox(boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox());
 
@@ -209,6 +208,7 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 //TODO: PLEASE CALL THIS FUNCTION BEFORE MONSTER DIES
 void AMonsterInc::MonsterNumDecrease() {
 	if (total_num > 0) total_num--;
+	if(total_num_of_monsters>0) total_num_of_monsters--;
 }
 
 //TODO: need to create a new interval map for twitch

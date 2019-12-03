@@ -49,6 +49,8 @@ AMagicRecall2Character::AMagicRecall2Character()
 
 	hp = 2;
 
+	hasShot = false;
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -179,6 +181,8 @@ void AMagicRecall2Character::MahouCastOff() {
 }
 
 void AMagicRecall2Character::Mahou() {
+	if (hasShot) return;
+	hasShot = true;
 	// Play animation, sound, whatever :)
 	if (Fireballs)
 	{
@@ -269,6 +273,9 @@ void AMagicRecall2Character::OnOverlap(UPrimitiveComponent* OverlappedComp, AAct
 			TakeDamage(1);
 			OtherActor->Destroy();
 		}
+	}
+	else if (OtherActor != this && Cast<AFireBall>(OtherActor)) {
+		hasShot = false;
 	}
 }
 

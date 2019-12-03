@@ -104,6 +104,8 @@ protected:
 
 	float shield_timer;
 
+	bool hasShot;
+
 public:
 
 	// Magic Recall functions

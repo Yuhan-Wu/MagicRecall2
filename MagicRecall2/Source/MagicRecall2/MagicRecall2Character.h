@@ -47,9 +47,7 @@ public:
 		bool GetAttackingState() { return bAttacking; }
 
 	UFUNCTION(BlueprintCallable) FORCEINLINE
-		bool GetHittingState() { return block_attack;
-	
-}
+		bool GetHittingState() { return block_attack; }
 
 protected:
 

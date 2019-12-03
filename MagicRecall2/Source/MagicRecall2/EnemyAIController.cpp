@@ -3,6 +3,7 @@
 
 #include "EnemyAIController.h"
 #include "Engine/World.h"
+#include "Math/Vector.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Controller.h"
 #include "Enemy.h"
@@ -28,10 +29,14 @@ void AEnemyAIController::Tick(float i_DeltaTime) {
 void AEnemyAIController::OnPossess(APawn* i_pInPawn) {
 	Super::OnPossess(i_pInPawn);
 	AActor* targetActor = nullptr;
+	float closestActorDistance = MAX_FLT;
 	for (TActorIterator<AActor> It(GetWorld(), chasingEnemyType); It; ++It)
 	{
-		targetActor = *It;
-		break;
+		FVector::Dist(i_pInPawn->GetActorLocation(), It->GetActorLocation());
+		if (FVector::Dist(i_pInPawn->GetActorLocation(), It->GetActorLocation()) < closestActorDistance) {
+			targetActor = *It;
+			closestActorDistance = FVector::Dist(i_pInPawn->GetActorLocation(), It->GetActorLocation());
+		}
 	}
 	check(targetActor);
 	IEnemy* enemy = Cast<IEnemy>(i_pInPawn);

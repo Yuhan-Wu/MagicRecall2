@@ -203,7 +203,7 @@ void AMagicRecall2Character::Mahou() {
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = Instigator;
 			
-			for (auto i = 0; i < numOfFireballs; i++) {
+			for (auto i = 0; i < FireballLevel[level]; i++) {
 				AFireBall* Projectile = World->SpawnActor< AFireBall >(Fireballs, MuzzleLocation, MuzzleRotation, SpawnParams);
 				Projectile->SetDistance(DistanceLevel[level]);
 				Projectile->SetSpeed(SpeedLevel[level]);

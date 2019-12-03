@@ -87,11 +87,13 @@ protected:
 	FTimerHandle MahouTimer;
 
 	// Mahou direction
-	std::vector<float> Angles{ -60 , 0, 60};
+	std::vector<float> Angles{ 0 , -60, 60, -90, 90};
 
 	// Power up
-	std::vector<float> DistanceLevel{600,800,1000};
-	std::vector<float> SpeedLevel{600,1000,1400};
+	//Base level, 1 bonfire, 2 bonfire, 3 bonfire
+	std::vector<float> DistanceLevel{600,600,1000,1200};
+	std::vector<float> SpeedLevel{600,600,1400,1800};
+	std::vector<float> FireballLevel{ 1,3,3,5 };
 	int level=0;
 	int numOfFireballs = 3;
 	float cosValue = 0.5f;

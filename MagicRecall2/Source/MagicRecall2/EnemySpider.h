@@ -37,4 +37,10 @@ public:
 
 	void PlaySound();
 
+	UFUNCTION(BlueprintCallable) FORCEINLINE
+		bool GetAttackingState() {return m_bAttacking;}
+
+
+private:
+	bool m_bAttacking;
 };

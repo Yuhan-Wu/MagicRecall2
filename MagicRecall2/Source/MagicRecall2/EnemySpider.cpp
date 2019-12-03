@@ -64,6 +64,10 @@ void AEnemySpider::attack_Implementation()
 		if (wizard) {
 			if (!wizard->block_attack) {
 				wizard->TakeDamage(1);
+				for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
+				{
+					It->MonsterNumDecrease();
+				}
 				this->Destroy();
 			}
 		}

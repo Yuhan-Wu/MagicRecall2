@@ -12,6 +12,8 @@
 #include "MonsterInc.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 
+int AEnemySlime::Slime_Num = 0;
+
 // Sets default values
 AEnemySlime::AEnemySlime()
 {
@@ -30,6 +32,7 @@ void AEnemySlime::receiveDamage_Implementation()
 	{
 		It->MonsterNumDecrease();
 	}
+	Slime_Num--;
 	Destroy();
 }
 
@@ -37,4 +40,9 @@ void AEnemySlime::attack_Implementation()
 {
 	//Add interaction with braziers
 	UE_LOG(LogTemp, Log, TEXT("%s has extinguished %s"), *GetName(), *getAttackTarget()->GetName());
+}
+
+void AEnemySlime::PlaySound() {
+	UAudioComponent* audio = Cast<UAudioComponent>(GetComponentByClass(UAudioComponent::StaticClass()));
+	audio->Play();
 }

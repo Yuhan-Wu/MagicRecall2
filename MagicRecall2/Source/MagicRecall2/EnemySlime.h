@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Enemy.h"
+#include "Components/AudioComponent.h"
 #include "EnemySlime.generated.h"
 
 UCLASS()
@@ -32,4 +33,7 @@ public:
 		void attack();
 	virtual void attack_Implementation() override;
 
+	static int Slime_Num;
+
+	void PlaySound();
 };

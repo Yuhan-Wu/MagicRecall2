@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Enemy.h"
+#include "Components/AudioComponent.h"
 #include "EnemySpider.generated.h"
 
 UCLASS()
@@ -32,5 +33,8 @@ public:
 		void attack();
 		virtual void attack_Implementation() override;
 
+	static int Spider_Num;
+
+	void PlaySound();
 
 };

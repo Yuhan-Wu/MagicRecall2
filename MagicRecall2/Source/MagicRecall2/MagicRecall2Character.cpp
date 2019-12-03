@@ -15,6 +15,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AMagicRecall2Character
@@ -46,7 +47,7 @@ AMagicRecall2Character::AMagicRecall2Character()
 
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
 
-	hp = 10;
+	hp = 2;
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -215,11 +216,13 @@ void AMagicRecall2Character::Mahou() {
 					Projectile->MahouInDirection(LaunchDirection);
 					Projectile->SetHome(this);
 					
-					UE_LOG(LogTemp, Log, TEXT("Born"));
+					// UE_LOG(LogTemp, Log, TEXT("Born"));
 				}
 			}
+			AudioComponent->Play();
 		}
 	}
+
 }
 
 int AMagicRecall2Character::PowerUp() {
@@ -243,6 +246,8 @@ void AMagicRecall2Character::TakeDamage(int damage) {
 		hp -= damage;
 		if (hp <= 0) {
 			// TODO: die
+			FLatentActionInfo LatentInfo;
+			UGameplayStatics::OpenLevel(this, FName("GameOver"));
 		}
 		else {
 			block_attack = true;

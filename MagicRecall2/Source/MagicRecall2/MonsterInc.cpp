@@ -62,17 +62,17 @@ void AMonsterInc::Tick(float DeltaTime)
 				for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
 					if (intervals[it.first].nums != 0) {
 						all_clear = false;
-						for (auto i = 0; i < intervals[it.first].nums; i++) {
-							Spawn(it.first);
-							// UE_LOG(LogTemp, Log, TEXT("Spawn"));
+						if (total_time > max_time || total_num < max_num) {
+							for (auto i = 0; i < intervals[it.first].nums; i++) {
+								Spawn(it.first);
+								// UE_LOG(LogTemp, Log, TEXT("Spawn"));
+							}
+							intervals[it.first].nums = 0;
+							--intervals[it.first].times;
 						}
-						intervals[it.first].nums = 0;
-						if (--intervals[it.first].times>0) {
-							spawn_boss = false;
-						}
-						if (!(total_time < max_time && total_num < max_num)) {
-							break;
-						}
+					}
+					if (intervals[it.first].times > 0) {
+						spawn_boss = false;
 					}
 				}
 				if (spawn_boss) {
@@ -143,6 +143,10 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 		UE_LOG(LogTemp, Log, TEXT("Spider"));
 		//TODO: probably need to store the pointer
 		AEnemySpider* enemy= static_cast<AEnemySpider*>(GetWorld()->SpawnActor(BP_Spider, &location));
+		if (AEnemySpider::Spider_Num == 0) {
+			enemy->PlaySound();
+		}
+		AEnemySpider::Spider_Num++;
 		
 		break;
 	}
@@ -152,6 +156,10 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 		UE_LOG(LogTemp, Log, TEXT("Eye"));
 		//TODO: probably need to store the pointer
 		AEnemyEye* enemy = static_cast<AEnemyEye*>(GetWorld()->SpawnActor(BP_Eye, &location));
+		if (AEnemyEye::Eye_Num == 0) {
+			enemy->PlaySound();
+		}
+		AEnemyEye::Eye_Num++;
 
 		break;
 	}
@@ -163,7 +171,10 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 		// FQuat QuatRotation1 = FQuat(rot1);
 		AEnemyGhost* enemy1 = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
 		// enemy1->AddActorLocalRotation(QuatRotation1);
-
+		if (AEnemyGhost::Ghost_Num == 0) {
+			enemy1->PlaySound();
+		}
+		AEnemyGhost::Ghost_Num++;
 		/*
 		FRotator rot2 = FRotator(0, -45, 0);
 		FQuat QuatRotation2 = FQuat(rot2);
@@ -182,10 +193,14 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 		}
 		AEnemySlime* enemy = static_cast<AEnemySlime*>(GetWorld()->SpawnActor(BP_Slime, &location));
 		// enemy1->AddActorLocalRotation(QuatRotation1);
-
+		if (AEnemySlime::Slime_Num == 0) {
+			enemy->PlaySound();
+		}
+		AEnemySlime::Slime_Num++;
 		break;
 	}
 	default:
+		UE_LOG(LogTemp, Log, TEXT("no spawn"));
 		break;
 	}
 }

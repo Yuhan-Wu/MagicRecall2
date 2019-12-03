@@ -8,6 +8,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Enemy.h"
 #include "ProjectileEye.h"
+#include "Components/AudioComponent.h"
 #include <vector>
 #include "EnemyEye.generated.h"
 
@@ -48,4 +49,6 @@ public:
 
 	virtual void Tick(float) override;
 	virtual void BeginPlay() override;
+
+	void PlaySound();
 };

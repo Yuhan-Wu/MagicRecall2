@@ -4,6 +4,7 @@
 #include "EnemyGhost.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/SphereComponent.h"
+
 #include "ConstructorHelpers.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -12,6 +13,8 @@
 #include "MonsterInc.h"
 #include "Engine.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
+
+int AEnemyGhost::Ghost_Num = 0;
 
 // Sets default values
 AEnemyGhost::AEnemyGhost()
@@ -35,6 +38,7 @@ void AEnemyGhost::receiveDamage_Implementation()
 	{
 		It->MonsterNumDecrease();
 	}
+	Ghost_Num--;
 	Destroy();
 }
 
@@ -57,6 +61,11 @@ void AEnemyGhost::attack_Implementation()
 	FRotator MuzzleRotationNegNinety = GhostRotation.Add(0, -180, 0);
 	AProjectileGhost* ProjectileNegNinetyDegrees = GetWorld()->SpawnActor< AProjectileGhost >(Projectile, MuzzleLocation, MuzzleRotationNegNinety);
 	UE_LOG(LogTemp, Log, TEXT("Ghost Launches Projectiles"));
+}
+
+void AEnemyGhost::PlaySound() {
+	UAudioComponent* audio = Cast<UAudioComponent>(GetComponentByClass(UAudioComponent::StaticClass()));
+	audio->Play();
 }
 
 

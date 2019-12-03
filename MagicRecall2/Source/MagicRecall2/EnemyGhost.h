@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Enemy.h"
 #include "ProjectileGhost.h"
+#include "Components/AudioComponent.h"
 #include "EnemyGhost.generated.h"
 
 UCLASS()
@@ -36,4 +37,8 @@ public:
 	virtual void attack_Implementation() override;
 
 	virtual void BeginPlay() override;
+
+	static int Ghost_Num;
+
+	void PlaySound();
 };

@@ -43,8 +43,8 @@ protected:
 	std::map<MonsterTypes,FConfigureInfo> Monsters;
 	std::map<MonsterTypes, FConfigureInfo> twitch_Monsters;
 
-	float max_time = 15;
-	int max_num = 2;
+	float max_time = 10;
+	int max_num = 4;
 
 	std::map<MonsterTypes, FConfigureInfo> intervals;
 	std::map<MonsterTypes, FConfigureInfo> twitch_intervals;

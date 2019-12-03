@@ -13,6 +13,8 @@
 #include "Engine.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 
+int AEnemyEye::Eye_Num = 0;
+
 // Sets default values
 AEnemyEye::AEnemyEye()
 {
@@ -27,11 +29,13 @@ AEnemyEye::AEnemyEye()
 	ProjectileMovementComponent->ProjectileGravityScale = 0;
 	*/
 	timer = 0;
+	Eye_Num++;
 }
 
 void AEnemyEye::BeginPlay() {
 	Super::BeginPlay();
 
+	// TODO: soud effect
 	GetWorld()->GetTimerManager().SetTimer(handler, this, &AEnemyEye::attack_Implementation, 5, false);
 }
 

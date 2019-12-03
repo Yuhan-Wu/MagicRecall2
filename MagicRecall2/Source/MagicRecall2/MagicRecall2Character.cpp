@@ -3,6 +3,10 @@
 #include <vector>
 #include "Engine.h"
 #include "FireBall.h"
+#include "Enemy.h"
+#include "EnemySlime.h"
+#include "EnemyGhost.h"
+#include "EnemySpider.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -35,11 +39,18 @@ AMagicRecall2Character::AMagicRecall2Character()
 	GetCharacterMovement()->AirControl = 0.2f;
 
 	block_attack = false;
+	writing_lock = false;
 
 	health = 5;
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+}
+
+void AMagicRecall2Character::BeginPlay() {
+	Super::BeginPlay();
+	particles = Cast<UParticleSystemComponent>(GetComponentByClass(UParticleSystemComponent::StaticClass()));
+	particles->DeactivateSystem();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -200,7 +211,7 @@ int AMagicRecall2Character::PowerUp() {
 }
 
 int AMagicRecall2Character::BackToMuggle() {
-	UE_LOG(LogTemp, Log, TEXT("decrease"));
+	// UE_LOG(LogTemp, Log, TEXT("decrease"));
 	if (level > 0) {
 		level--;
 	}
@@ -208,21 +219,36 @@ int AMagicRecall2Character::BackToMuggle() {
 }
 
 void AMagicRecall2Character::TakeDamage(int damage) {
+	while (writing_lock) {};
+	writing_lock = true;
 	if (!block_attack) {
 		hp -= damage;
 		if (hp <= 0) {
-			// TODO die
+			// TODO: die
 		}
 		else {
-			block_attack=true;
+			block_attack = true;
+			particles->ActivateSystem();
 			GetWorld()->GetTimerManager().SetTimer(handler, this, &AMagicRecall2Character::ShieldDisappear, 2, false);
-			// TODO: add shield, probably also need to remove timer???
+			// TODO: probably also need to remove timer???
 			// TODO: remove collision with the fireballs
+		}
+	}
+	writing_lock = false;
+}
+
+void AMagicRecall2Character::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+	if (OtherActor != this && Cast<IEnemy>(OtherActor)) {
+		if (!Cast<AEnemySlime>(OtherActor) && !Cast<AEnemyGhost>(OtherActor) && !Cast<AEnemySpider>(OtherActor)) {
+			UE_LOG(LogTemp, Log, TEXT("yup"));
+			TakeDamage(1);
+			OtherActor->Destroy();
 		}
 	}
 }
 
 void AMagicRecall2Character::ShieldDisappear() {
+	UE_LOG(LogTemp, Log, TEXT("remove"));
 	block_attack = false;
-	// TODO: remove shield
+	particles->DeactivateSystem();
 }

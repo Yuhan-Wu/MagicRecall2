@@ -51,7 +51,6 @@ void AMonsterInc::BeginPlay()
 // Called every frame
 void AMonsterInc::Tick(float DeltaTime)
 {
-
 	Super::Tick(DeltaTime);
 	//fire_function += DeltaTime;
 	//if (fire_function > 2) {
@@ -106,6 +105,7 @@ void AMonsterInc::Tick(float DeltaTime)
 }
 
 void AMonsterInc::Configure() {
+	int temp = 0;
 	for (FConfigureInfo it:configures) {
 		if (it.isBoss) {
 			bossType = it.type;
@@ -116,17 +116,12 @@ void AMonsterInc::Configure() {
 		}
 		intervals[it.type] = it;
 		Monsters[it.type] = it;
-		total_num_of_monsters += it.nums * it.times;
+		temp += it.nums * it.times;
 	}
+	total_num_of_monsters += temp * rounds;
 	for (FConfigureInfo it : twitch_configures) {
 		//TODO: add twitch boss type
-		if (it.isBoss) {
-			bossType = it.type;
-			rounds = it.rounds;
-			total_num_of_monsters += it.nums * it.rounds;
-			twitch_Monsters[it.type] = it;
-			continue;
-		}
+		// no boss for twitch
 		twitch_intervals[it.type] = it;
 		twitch_Monsters[it.type] = it;
 		total_num_of_monsters += it.nums * it.times;
@@ -138,6 +133,7 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 	total_time = 0;
 	int random_loc = rand() % boxes.Num();
 	FVector location = FMath::RandPointInBox(boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox());
+
 	switch (type)
 	{
 	case MonsterTypes::Spider:
@@ -194,49 +190,24 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 
 //TODO: PLEASE CALL THIS FUNCTION BEFORE MONSTER DIES
 void AMonsterInc::MonsterNumDecrease() {
-	total_num--;
+	if (total_num > 0) total_num--;
+	if (total_num_of_monsters > 0) total_num_of_monsters--;
 }
 
 //TODO: need to create a new interval map for twitch
 void AMonsterInc::ReceiveTwitchInput(FString input) {
 	// UE_LOG(LogTemp, Log, TEXT("Spawn"));
 	MonsterTypes type = enum_map[input.ToUpper()];
-	bool spawn_boss = true;
-	bool all_clear = true;
+	// TODO: handle too many monsters on the grid
 	if (total_num < max_num) {
-		if (twitch_intervals[type].nums != 0) {
+		while (twitch_intervals[type].nums > 0) {
 			Spawn(type);
-			twitch_intervals[type].nums = 0;
-			--twitch_intervals[type].times;
+			twitch_intervals[type].nums--;
 		}
-		for (std::pair<MonsterTypes, FConfigureInfo> item : twitch_intervals) {
-			if (item.second.nums == 0) {
-				if (item.second.times == 0) {
-					spawn_boss = false;
-				}
-				else {
-					twitch_intervals[item.first].nums = twitch_Monsters[item.first].nums;
-					twitch_intervals[item.first].times--;
-				}
-			}
-			else {
-				all_clear = false;
-			}
-		}
-		if (spawn_boss) {
-			for (auto i = 0; i < twitch_intervals[bossType].nums; i++) {
-				Spawn(bossType);
-			}
-			for (std::pair<const MonsterTypes, FConfigureInfo> it : twitch_intervals) {
-				twitch_intervals[it.first].times = twitch_Monsters[it.first].times;
-			}
-			max_num += 2;
-			max_time -= 2;
-		}
-		if (all_clear) {
-			for (std::pair<const MonsterTypes, FConfigureInfo> it : twitch_intervals) {
-				twitch_intervals[it.first].nums = twitch_Monsters[it.first].nums;
-			}
+		twitch_intervals[type].times--;
+		if (twitch_intervals[type].times > 0) {
+			
+			twitch_intervals[type].nums = twitch_Monsters[type].nums;
 		}
 	}
 }

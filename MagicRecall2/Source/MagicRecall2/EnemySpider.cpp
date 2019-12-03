@@ -11,6 +11,7 @@
 #include <EngineGlobals.h>
 #include "MonsterInc.h"
 #include "EngineUtils.h"
+#include "MagicRecall2Character.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 
 
@@ -54,5 +55,15 @@ void AEnemySpider::receiveDamage_Implementation()
 
 void AEnemySpider::attack_Implementation()
 {
-	UE_LOG(LogTemp, Log, TEXT("%s is attacking %s"), *GetName(), *getAttackTarget()->GetName());
+	// UE_LOG(LogTemp, Log, TEXT("%s is attacking %s"), *GetName(), *getAttackTarget()->GetName());
+	for (TActorIterator<AMagicRecall2Character> wizard(GetWorld()); wizard; ++wizard)
+	{
+		// Same as with the Object Iterator, access the subclass instance with the * or -> operators.
+		if (wizard) {
+			if (!wizard->block_attack) {
+				wizard->TakeDamage(1);
+				this->Destroy();
+			}
+		}
+	}
 }

@@ -45,18 +45,19 @@ void ABonfire::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		// UE_LOG(LogTemp, Log, TEXT("POWERUP"));
 		// TODO: light it up ->TA
 	}
-	else if (OtherActor != this && Cast<AEnemySlime>(OtherActor) && isLit) {
+	else if (OtherActor != this && Cast<AEnemySlime>(OtherActor)) {
 		// TODO: deal with slime
-		isLit = false;
-
-		for (TActorIterator<AMagicRecall2Character> wizard(GetWorld()); wizard; ++wizard)
-		{
-			// Same as with the Object Iterator, access the subclass instance with the * or -> operators.
-			if (wizard) {
-				wizard->BackToMuggle();
-				AEnemySlime* slime = Cast<AEnemySlime>(OtherActor);
-				slime->Destroy();
-				particles->DeactivateSystem();
+		AEnemySlime* slime = Cast<AEnemySlime>(OtherActor);
+		slime->Destroy();
+		if (isLit) {
+			isLit = false;
+			for (TActorIterator<AMagicRecall2Character> wizard(GetWorld()); wizard; ++wizard)
+			{
+				// Same as with the Object Iterator, access the subclass instance with the * or -> operators.
+				if (wizard) {
+					wizard->BackToMuggle();
+					particles->DeactivateSystem();
+				}
 			}
 		}
 	}
@@ -64,7 +65,10 @@ void ABonfire::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 
 void ABonfire::ReceiveTwitchInput(AMagicRecall2Character* wizard) {
 	// UE_LOG(LogTemp, Log, TEXT("POWERUP"));
-	isLit = true;
-	wizard->PowerUp();
+	if (!isLit) {
+		isLit = true;
+		wizard->PowerUp();
+		particles->ActivateSystem();
+	}
 }
 

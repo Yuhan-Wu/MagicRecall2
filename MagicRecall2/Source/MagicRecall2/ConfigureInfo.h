@@ -21,14 +21,14 @@ struct FConfigureInfo {
 
 	// float interval;
 	UPROPERTY(EditAnywhere, Category = DisplayInfo)
-	uint8 times; // how many times it spawns before a boss appears
+	int8 times; // how many times it spawns before a boss appears
 	UPROPERTY(EditAnywhere, Category = DisplayInfo)
-	uint8 nums;
+	int8 nums;
 
 	UPROPERTY(EditAnywhere, Category = DisplayInfo)
 	bool isBoss;
 	UPROPERTY(EditAnywhere, Category = DisplayInfo)
-	uint8 rounds; // set how many rounds(only for boss)
+	int8 rounds; // set how many rounds(only for boss)
 
 	FConfigureInfo() {
 		type = MonsterTypes::Eye;

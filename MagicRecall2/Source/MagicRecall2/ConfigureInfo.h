@@ -37,4 +37,12 @@ struct FConfigureInfo {
 		isBoss = false;
 		rounds = 0;
 	}
+
+	FConfigureInfo(const FConfigureInfo& other) {
+		type = other.type;
+		times = other.times;
+		nums = other.nums;
+		isBoss = other.isBoss;
+		rounds = other.rounds;
+	}
 };

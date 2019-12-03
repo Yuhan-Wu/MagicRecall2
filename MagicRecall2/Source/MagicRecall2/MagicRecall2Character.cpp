@@ -42,11 +42,11 @@ AMagicRecall2Character::AMagicRecall2Character()
 
 	block_attack = false;
 
-	health = 5;
-
 	shield_timer = 0;
 
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
+
+	hp = 10;
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -56,6 +56,8 @@ void AMagicRecall2Character::BeginPlay() {
 	Super::BeginPlay();
 	particles = Cast<UParticleSystemComponent>(GetComponentByClass(UParticleSystemComponent::StaticClass()));
 	particles->DeactivateSystem();
+
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMagicRecall2Character::OnOverlap);
 }
 
 void AMagicRecall2Character::Tick(float delta) {
@@ -255,9 +257,10 @@ void AMagicRecall2Character::TakeDamage(int damage) {
  }
 
 void AMagicRecall2Character::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+	UE_LOG(LogTemp, Log, TEXT("yup"));
 	if (OtherActor != this && Cast<IEnemy>(OtherActor)) {
 		if (!Cast<AEnemySlime>(OtherActor) && !Cast<AEnemyGhost>(OtherActor) && !Cast<AEnemySpider>(OtherActor)) {
-			UE_LOG(LogTemp, Log, TEXT("yup"));
+			// UE_LOG(LogTemp, Log, TEXT("yup"));
 			TakeDamage(1);
 			OtherActor->Destroy();
 		}

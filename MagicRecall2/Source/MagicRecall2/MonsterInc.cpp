@@ -81,6 +81,7 @@ void AMonsterInc::Tick(float DeltaTime)
 						Spawn(bossType);
 					}
 					for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
+						intervals[it.first].nums = Monsters[it.first].nums;
 						intervals[it.first].times = Monsters[it.first].times;
 					}
 					max_num += 2;
@@ -114,16 +115,16 @@ void AMonsterInc::Configure() {
 			Monsters[it.type] = it;
 			continue;
 		}
-		intervals[it.type] = it;
-		Monsters[it.type] = it;
+		intervals[it.type]=FConfigureInfo(it);
+		Monsters[it.type] = FConfigureInfo(it);
 		temp += it.nums * it.times;
 	}
 	total_num_of_monsters += temp * rounds;
 	for (FConfigureInfo it : twitch_configures) {
 		//TODO: add twitch boss type
 		// no boss for twitch
-		twitch_intervals[it.type] = it;
-		twitch_Monsters[it.type] = it;
+		twitch_intervals[it.type] = FConfigureInfo(it);
+		twitch_Monsters[it.type] = FConfigureInfo(it);
 		total_num_of_monsters += it.nums * it.times;
 	}
 }
@@ -131,6 +132,7 @@ void AMonsterInc::Configure() {
 void AMonsterInc::Spawn(MonsterTypes type) {
 	total_num += 1;
 	total_time = 0;
+	total_num_of_monsters--;
 	int random_loc = rand() % boxes.Num();
 	FVector location = FMath::RandPointInBox(boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox());
 
@@ -191,7 +193,6 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 //TODO: PLEASE CALL THIS FUNCTION BEFORE MONSTER DIES
 void AMonsterInc::MonsterNumDecrease() {
 	if (total_num > 0) total_num--;
-	if (total_num_of_monsters > 0) total_num_of_monsters--;
 }
 
 //TODO: need to create a new interval map for twitch

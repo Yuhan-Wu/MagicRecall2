@@ -11,14 +11,14 @@ AProjectileGhost::AProjectileGhost()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	USphereComponent* CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
+	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 	CollisionComponent->InitSphereRadius(10.0f);
 	CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Enemy_Attack"));
 
 	RootComponent = CollisionComponent;
 
 	// Create and position a mesh component so we can see the projectiles
-	UStaticMeshComponent* SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
+	SphereVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisualRepresentation"));
 	SphereVisual->SetupAttachment(RootComponent);
 	SphereVisual->SetCanEverAffectNavigation(false);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereVisualAsset(TEXT("/Game/StarterContent/Shapes/Shape_Sphere.Shape_Sphere"));
@@ -44,7 +44,6 @@ AProjectileGhost::AProjectileGhost()
 void AProjectileGhost::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame

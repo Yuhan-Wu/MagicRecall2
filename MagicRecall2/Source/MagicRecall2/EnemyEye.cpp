@@ -36,7 +36,7 @@ void AEnemyEye::BeginPlay() {
 	Super::BeginPlay();
 
 	// TODO: soud effect
-	GetWorld()->GetTimerManager().SetTimer(handler, this, &AEnemyEye::attack_Implementation, 5, false);
+	GetWorld()->GetTimerManager().SetTimer(handler, this, &AEnemyEye::attack_Implementation, 5, true);
 }
 
 void AEnemyEye::Tick(float delta) {

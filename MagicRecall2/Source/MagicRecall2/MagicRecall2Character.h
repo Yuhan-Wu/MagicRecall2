@@ -20,6 +20,8 @@ public:
 
 	virtual void BeginPlay() override;
 
+	virtual void Tick(float) override;
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;
@@ -106,6 +108,8 @@ protected:
 
 	UParticleSystemComponent* particles;
 
+	float shield_timer;
+
 public:
 
 	// Magic Recall functions
@@ -120,12 +124,12 @@ public:
 	int PowerUp();
 	int BackToMuggle();
 
+	UFUNCTION()
 	void TakeDamage(int damage);
 
 	bool bAttacking;
 
 	bool block_attack;
 
-	bool writing_lock;
 };
 

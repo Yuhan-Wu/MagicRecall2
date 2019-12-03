@@ -65,5 +65,6 @@ void AEnemySpider::attack_Implementation()
 				this->Destroy();
 			}
 		}
+		break;
 	}
 }

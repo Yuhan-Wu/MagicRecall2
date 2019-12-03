@@ -31,7 +31,10 @@ public:
 
 private:
 	float Speed = 400;
+
+	UPROPERTY(EditAnywhere)
 	USphereComponent* CollisionComponent;
+
 	UProjectileMovementComponent* ProjectileMovementComponent;
 	float i = 10.0f;
 	float AngleAxis = 0;

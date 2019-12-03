@@ -1,6 +1,7 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 #include "MagicRecall2Character.h"
 #include <vector>
+#include <mutex>
 #include "Engine.h"
 #include "FireBall.h"
 #include "Enemy.h"
@@ -17,6 +18,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // AMagicRecall2Character
+std::mutex mtx;
 
 AMagicRecall2Character::AMagicRecall2Character()
 {
@@ -39,9 +41,10 @@ AMagicRecall2Character::AMagicRecall2Character()
 	GetCharacterMovement()->AirControl = 0.2f;
 
 	block_attack = false;
-	writing_lock = false;
 
 	health = 5;
+
+	shield_timer = 0;
 
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
 
@@ -53,6 +56,17 @@ void AMagicRecall2Character::BeginPlay() {
 	Super::BeginPlay();
 	particles = Cast<UParticleSystemComponent>(GetComponentByClass(UParticleSystemComponent::StaticClass()));
 	particles->DeactivateSystem();
+}
+
+void AMagicRecall2Character::Tick(float delta) {
+	Super::Tick(delta);
+	if (block_attack) {
+		shield_timer += delta;
+		if (shield_timer > 2) {
+			ShieldDisappear();
+			shield_timer = 0;
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -222,8 +236,7 @@ int AMagicRecall2Character::BackToMuggle() {
 }
 
 void AMagicRecall2Character::TakeDamage(int damage) {
-	while (writing_lock) {};
-	writing_lock = true;
+	mtx.lock();
 	if (!block_attack) {
 		hp -= damage;
 		if (hp <= 0) {
@@ -231,14 +244,15 @@ void AMagicRecall2Character::TakeDamage(int damage) {
 		}
 		else {
 			block_attack = true;
+			UE_LOG(LogTemp, Log, TEXT("shield on"));
 			particles->ActivateSystem();
-			GetWorld()->GetTimerManager().SetTimer(handler, this, &AMagicRecall2Character::ShieldDisappear, 2, false);
+			// GetWorld()->GetTimerManager().SetTimer(handler, this, &AMagicRecall2Character::ShieldDisappear, 1, false);
 			// TODO: probably also need to remove timer???
 			// TODO: remove collision with the fireballs
 		}
 	}
-	writing_lock = false;
-}
+	mtx.unlock();
+ }
 
 void AMagicRecall2Character::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	if (OtherActor != this && Cast<IEnemy>(OtherActor)) {
@@ -252,6 +266,9 @@ void AMagicRecall2Character::OnOverlap(UPrimitiveComponent* OverlappedComp, AAct
 
 void AMagicRecall2Character::ShieldDisappear() {
 	UE_LOG(LogTemp, Log, TEXT("remove"));
+	mtx.lock();
 	block_attack = false;
 	particles->DeactivateSystem();
+	// GetWorld()->GetTimerManager().ClearTimer(handler);
+	mtx.unlock();
 }

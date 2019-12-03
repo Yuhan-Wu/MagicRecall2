@@ -112,6 +112,7 @@ void AMonsterInc::Configure() {
 			bossType = it.type;
 			rounds = it.rounds;
 			total_num_of_monsters += it.nums * it.rounds;
+			//total_num_of_monsters++;
 			Monsters[it.type] = it;
 			continue;
 		}

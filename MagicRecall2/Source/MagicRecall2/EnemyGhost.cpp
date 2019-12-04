@@ -58,7 +58,7 @@ void AEnemyGhost::attack_Implementation()
 	GetActorEyesViewPoint(GhostLocation, GhostRotation);
 
 	// To world location
-	FVector MuzzleLocation = GhostLocation+FTransform(GhostRotation).TransformVector(FVector(100,100,0));
+	FVector MuzzleLocation = GhostLocation + FTransform(GhostRotation).TransformVector(FVector(40, 0, 0));
 	//MuzzleLocation.Z -= 10;
 	FRotator MuzzleRotation = GhostRotation;
 

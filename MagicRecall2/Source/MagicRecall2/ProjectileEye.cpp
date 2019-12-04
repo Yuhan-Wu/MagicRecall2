@@ -63,14 +63,14 @@ void AProjectileEye::Tick(float DeltaTime)
 		// radius increases
 		FVector Radius = FVector(i, 0, 0);
 
-		// angle increases by 1 every frame
+		// angle increases every frame
 		AngleAxis += 2;
 
 		// prevent number from growind indefinitely
-		if (AngleAxis > 360.0f) {
+		/*if (AngleAxis > 360.0f) {
 
 			AngleAxis = 1;
-		}
+		}*/
 
 		FVector RotateValue = Radius.RotateAngleAxis(AngleAxis, FVector(0, 0, 1));
 
@@ -79,7 +79,7 @@ void AProjectileEye::Tick(float DeltaTime)
 		NewLocation.Z += RotateValue.Z;
 
 		SetActorLocation(NewLocation);
-		i += .05;
+		i += .25;//.05;
 	}
 	else if (spawned) {
 		Destroy();

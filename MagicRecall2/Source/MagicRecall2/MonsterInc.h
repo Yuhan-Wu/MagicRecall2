@@ -45,7 +45,9 @@ protected:
 	std::map<MonsterTypes,FConfigureInfo> Monsters;
 	std::map<MonsterTypes, FConfigureInfo> twitch_Monsters;
 
+	UPROPERTY(EditAnywhere)
 	float max_time = 10;
+	UPROPERTY(EditAnywhere)
 	int max_num = 3;
 
 	std::map<MonsterTypes, FConfigureInfo> intervals;

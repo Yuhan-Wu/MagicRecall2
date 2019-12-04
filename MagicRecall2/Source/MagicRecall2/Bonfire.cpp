@@ -43,10 +43,8 @@ void ABonfire::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		wizard->PowerUp();
 		particles->ActivateSystem();
 		// UE_LOG(LogTemp, Log, TEXT("POWERUP"));
-		// TODO: light it up ->TA
 	}
 	else if (OtherActor != this && Cast<AEnemySlime>(OtherActor)) {
-		// TODO: deal with slime
 		AEnemySlime* slime = Cast<AEnemySlime>(OtherActor);
 		slime->receiveDamage();
 		if (isLit) {

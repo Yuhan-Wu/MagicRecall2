@@ -271,7 +271,8 @@ void AMagicRecall2Character::OnOverlap(UPrimitiveComponent* OverlappedComp, AAct
 		if (!Cast<AEnemySlime>(OtherActor) && !Cast<AEnemyGhost>(OtherActor) && !Cast<AEnemySpider>(OtherActor)) {
 			// UE_LOG(LogTemp, Log, TEXT("yup"));
 			TakeDamage(1);
-			OtherActor->Destroy();
+			IEnemy* enemy = Cast<IEnemy>(OtherActor);
+			enemy->receiveDamage();
 		}
 	}
 	else if (OtherActor != this && Cast<AFireBall>(OtherActor)) {

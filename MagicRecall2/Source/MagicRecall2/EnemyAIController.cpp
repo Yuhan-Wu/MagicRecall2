@@ -40,7 +40,6 @@ void AEnemyAIController::OnPossess(APawn* i_pInPawn) {
 	}
 	check(targetActor);
 	IEnemy* enemy = Cast<IEnemy>(i_pInPawn);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *GetPawn()->GetName());
 	if (!GetPawn()) UE_LOG(LogTemp, Warning, TEXT("NULLLLLLLL"));
 	enemy->setAttackTarget(targetActor);
 	enemy->setMoveTarget(targetActor);

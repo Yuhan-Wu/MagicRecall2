@@ -29,7 +29,7 @@ void AEnemyGhost::BeginPlay() {
 
 void AEnemyGhost::move_Implementation()
 {
-	UE_LOG(LogTemp, Log, TEXT("%s is moving"), *GetName()); //No target
+	
 }
 
 void AEnemyGhost::receiveDamage_Implementation()
@@ -66,7 +66,6 @@ void AEnemyGhost::attack_Implementation()
 	AProjectileGhost* ProjectileNinetyDegrees = GetWorld()->SpawnActor< AProjectileGhost >(Projectile, MuzzleLocation, MuzzleRotationNinety);
 	FRotator MuzzleRotationNegNinety = GhostRotation.Add(0, -180, 0);
 	AProjectileGhost* ProjectileNegNinetyDegrees = GetWorld()->SpawnActor< AProjectileGhost >(Projectile, MuzzleLocation, MuzzleRotationNegNinety);
-	UE_LOG(LogTemp, Log, TEXT("Ghost Launches Projectiles"));
 }
 
 void AEnemyGhost::PlaySound() {

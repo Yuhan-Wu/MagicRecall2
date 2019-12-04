@@ -22,7 +22,7 @@ AEnemySlime::AEnemySlime()
 
 void AEnemySlime::move_Implementation()
 {
-	UE_LOG(LogTemp, Log, TEXT("%s is moving towards %s"), *GetName(), *getMoveTarget()->GetName());
+	
 }
 
 void AEnemySlime::receiveDamage_Implementation()
@@ -43,8 +43,7 @@ void AEnemySlime::receiveDamage_Implementation()
 
 void AEnemySlime::attack_Implementation()
 {
-	//Add interaction with braziers
-	UE_LOG(LogTemp, Log, TEXT("%s has extinguished %s"), *GetName(), *getAttackTarget()->GetName());
+	
 }
 
 void AEnemySlime::PlaySound() {

@@ -34,7 +34,6 @@ AMonsterInc::AMonsterInc()
 	enum_map["EYE"] = MonsterTypes::Eye;
 	enum_map["GHOST"] = MonsterTypes::Ghost;
 	enum_map["SLIME"] = MonsterTypes::Slime;
-	// TODO: need to add other types of monsters
 }
 
 // Called when the game starts or when spawned
@@ -132,7 +131,6 @@ void AMonsterInc::Configure() {
 	}
 	total_num_of_monsters += temp * rounds;
 	for (FConfigureInfo it : twitch_configures) {
-		//TODO: add twitch boss type
 		// no boss for twitch
 		twitch_intervals[it.type] = FConfigureInfo(it);
 		twitch_Monsters[it.type] = FConfigureInfo(it);
@@ -153,7 +151,6 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
 	case MonsterTypes::Spider:
 	{
 		UE_LOG(LogTemp, Log, TEXT("Spider"));
-		//TODO: probably need to store the pointer
 		AEnemySpider* enemy= static_cast<AEnemySpider*>(GetWorld()->SpawnActor(BP_Spider, &location));
 		if (AEnemySpider::Spider_Num == 0) {
 			enemy->PlaySound();
@@ -165,11 +162,9 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
 		
 		break;
 	}
-		//TODO add other monsters
 	case MonsterTypes::Eye:
 	{
 		UE_LOG(LogTemp, Log, TEXT("Eye"));
-		//TODO: probably need to store the pointer
 		AEnemyEye* enemy = static_cast<AEnemyEye*>(GetWorld()->SpawnActor(BP_Eye, &location));
 		if (AEnemyEye::Eye_Num == 0) {
 			enemy->PlaySound();
@@ -184,7 +179,6 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
 	case MonsterTypes::Ghost:
 	{
 		UE_LOG(LogTemp, Log, TEXT("Ghost"));
-		//TODO: probably need to store the pointer
 		FRotator rot1 = FRotator(0, 180, 0);
 		// FQuat QuatRotation1 = FQuat(rot1);
 		AEnemyGhost* enemy = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
@@ -207,7 +201,6 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
 	case MonsterTypes::Slime:
 	{
 		UE_LOG(LogTemp, Log, TEXT("Slime"));
-		//TODO: probably need to store the pointer
 		// FQuat QuatRotation1 = FQuat(rot1);
 		if (BP_Slime == NULL) {
 			UE_LOG(LogTemp, Log, TEXT("BAD INITIALIZATION"));
@@ -238,17 +231,14 @@ void AMonsterInc::Spawn(MonsterTypes type)
 	Spawn(type, false);
 }
 
-//TODO: PLEASE CALL THIS FUNCTION BEFORE MONSTER DIES
 void AMonsterInc::MonsterNumDecrease() {
 	if (total_num > 0) total_num--;
 	if(total_num_of_monsters>0) total_num_of_monsters--;
 }
 
-//TODO: need to create a new interval map for twitch
 void AMonsterInc::ReceiveTwitchInput(FString input) {
 	// UE_LOG(LogTemp, Log, TEXT("Spawn"));
 	MonsterTypes type = enum_map[input.ToUpper()];
-	// TODO: handle too many monsters on the grid
 	if (total_num < max_num) {
 		while (twitch_intervals[type].nums > 0) {
 			Spawn(type);

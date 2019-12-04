@@ -249,7 +249,6 @@ void AMagicRecall2Character::TakeDamage(int damage) {
 	if (!block_attack) {
 		hp -= damage;
 		if (hp <= 0) {
-			// TODO: die
 			FLatentActionInfo LatentInfo;
 			UGameplayStatics::OpenLevel(this, FName("GameOver"));
 		}
@@ -258,8 +257,6 @@ void AMagicRecall2Character::TakeDamage(int damage) {
 			UE_LOG(LogTemp, Log, TEXT("shield on"));
 			particles->ActivateSystem();
 			// GetWorld()->GetTimerManager().SetTimer(handler, this, &AMagicRecall2Character::ShieldDisappear, 1, false);
-			// TODO: probably also need to remove timer???
-			// TODO: remove collision with the fireballs
 		}
 	}
 	mtx.unlock();

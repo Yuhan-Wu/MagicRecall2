@@ -28,6 +28,9 @@ class MAGICRECALL2_API IEnemy
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	int health = 1;
+	bool showHealthBar = false;
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void move();
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
@@ -41,6 +44,10 @@ public:
 	void setAttackTarget(AActor * i_attackTarget) { attackTarget = i_attackTarget; }
 	AActor * const getAttackTarget() { return attackTarget; }
 
+	void setHealthAndShowHealthBar(int new_health) {
+		health = new_health;
+		showHealthBar = true;
+	}
 
 private:
 	AActor * moveTarget;

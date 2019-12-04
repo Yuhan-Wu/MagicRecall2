@@ -38,6 +38,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	void Spawn(MonsterTypes, bool);
+	void SpawnBoss(MonsterTypes);
 	void Spawn(MonsterTypes);
 
 	std::map<MonsterTypes,FConfigureInfo> Monsters;

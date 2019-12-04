@@ -33,15 +33,18 @@ void AEnemySpider::move_Implementation()
 
 void AEnemySpider::receiveDamage_Implementation()
 {
-	mtx.lock();
-	for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
-	{
-		It->MonsterNumDecrease();
-		break;
-	}
-	Spider_Num--;
-	mtx.unlock();
-	Destroy();
+	health -= 1;
+	if (health <= 0) {
+		mtx.lock();
+		for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
+		{
+			It->MonsterNumDecrease();
+			break;
+		}
+		Spider_Num--;
+		mtx.unlock();
+		Destroy();
+	}	
 }
 
 void AEnemySpider::attack_Implementation()

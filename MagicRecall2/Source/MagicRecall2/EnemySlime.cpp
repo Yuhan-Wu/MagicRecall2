@@ -27,15 +27,18 @@ void AEnemySlime::move_Implementation()
 
 void AEnemySlime::receiveDamage_Implementation()
 {
-	mtx.lock();
-	for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
-	{
-		It->MonsterNumDecrease();
-		break;
+	health -= 1;
+	if (health <= 0) {
+		mtx.lock();
+		for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
+		{
+			It->MonsterNumDecrease();
+			break;
+		}
+		Slime_Num--;
+		mtx.unlock();
+		Destroy();
 	}
-	Slime_Num--;
-	mtx.unlock();
-	Destroy();
 }
 
 void AEnemySlime::attack_Implementation()

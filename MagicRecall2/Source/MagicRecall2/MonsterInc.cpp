@@ -78,7 +78,7 @@ void AMonsterInc::Tick(float DeltaTime)
 			if (spawn_boss) {
 				for (auto i = 0; i < Monsters[bossType].nums; i++) {
 					UE_LOG(LogTemp, Log, TEXT("Boss"));
-					Spawn(bossType);
+					SpawnBoss(bossType);
 				}
 				for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
 					// intervals[it.first].nums = Monsters[it.first].nums;
@@ -141,12 +141,13 @@ void AMonsterInc::Configure() {
 	}
 }
 
-void AMonsterInc::Spawn(MonsterTypes type) {
+void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
 	total_num += 1;
 	total_time = 0;
 	int random_loc = rand() % boxes.Num();
 	FVector location = FMath::RandPointInBox(boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox());
 	location.Z = boxes[random_loc]->GetCollisionComponent()->Bounds.GetBox().GetCenter().Z;
+
 	switch (type)
 	{
 	case MonsterTypes::Spider:
@@ -158,6 +159,9 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 			enemy->PlaySound();
 		}
 		AEnemySpider::Spider_Num++;
+		if (isBoss) {
+			enemy->setHealthAndShowHealthBar(3);
+		}
 		
 		break;
 	}
@@ -171,6 +175,9 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 			enemy->PlaySound();
 		}
 		AEnemyEye::Eye_Num++;
+		if (isBoss) {
+			enemy->setHealthAndShowHealthBar(3);
+		}
 
 		break;
 	}
@@ -180,10 +187,10 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 		//TODO: probably need to store the pointer
 		FRotator rot1 = FRotator(0, 180, 0);
 		// FQuat QuatRotation1 = FQuat(rot1);
-		AEnemyGhost* enemy1 = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
+		AEnemyGhost* enemy = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
 		// enemy1->AddActorLocalRotation(QuatRotation1);
 		if (AEnemyGhost::Ghost_Num == 0) {
-			enemy1->PlaySound();
+			enemy->PlaySound();
 		}
 		AEnemyGhost::Ghost_Num++;
 		/*
@@ -192,6 +199,9 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 		AEnemyGhost* enemy2 = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
 		enemy2->AddActorLocalRotation(QuatRotation2);
 		*/
+		if (isBoss) {
+			enemy->setHealthAndShowHealthBar(3);
+		}
 		break;
 	}
 	case MonsterTypes::Slime:
@@ -208,12 +218,24 @@ void AMonsterInc::Spawn(MonsterTypes type) {
 			enemy->PlaySound();
 		}
 		AEnemySlime::Slime_Num++;
+		if (isBoss) {
+			enemy->setHealthAndShowHealthBar(3);
+		}
 		break;
 	}
 	default:
 		UE_LOG(LogTemp, Log, TEXT("no spawn"));
 		break;
 	}
+}
+
+void AMonsterInc::SpawnBoss(MonsterTypes type){
+	Spawn(type, true);
+}
+
+void AMonsterInc::Spawn(MonsterTypes type)
+{
+	Spawn(type, false);
 }
 
 //TODO: PLEASE CALL THIS FUNCTION BEFORE MONSTER DIES

@@ -34,12 +34,15 @@ void AEnemyGhost::move_Implementation()
 
 void AEnemyGhost::receiveDamage_Implementation()
 {
+	mtx.lock();
 	for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
 	{
 		It->MonsterNumDecrease();
+		break;
 	}
 	Ghost_Num--;
 	Destroy();
+	mtx.unlock();
 }
 
 void AEnemyGhost::attack_Implementation()

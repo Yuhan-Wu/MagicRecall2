@@ -7,10 +7,11 @@
 #include "UObject/Interface.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include <mutex>
 #include "Enemy.generated.h"
 
 
-
+extern std::mutex mtx;
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UEnemy : public UInterface

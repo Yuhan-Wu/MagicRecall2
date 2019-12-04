@@ -55,48 +55,62 @@ void AMonsterInc::Tick(float DeltaTime)
 	//fire_function += DeltaTime;
 	//if (fire_function > 2) {
 		//fire_function = 0;
-		if (rounds > 0) {
-			bool all_clear = true;
-			if (total_time < max_time && total_num < max_num) { //If within the time limit and there are < max_num monsters on the board, we can spawn monsters
-				bool spawn_boss = true;
-				for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) { //For each monster type
-					if (intervals[it.first].times != 0) { //If there is another group of monsters yet to spawn
-						all_clear = false;
-						spawn_boss = false; //Don't spawn the boss yet
-						if (total_time < max_time && total_num + intervals[it.first].nums <= max_num) { //If we are within the time limit and the total_num + the monsters we will spawn is below the max num
-							for (auto i = 0; i < intervals[it.first].nums; i++) {
-								Spawn(it.first); //Spawn num number of monsters
-							}
-							--intervals[it.first].times; //Record this group of monsters has spawned							
+	if (rounds > 0) {
+		bool all_clear = true;
+		if (total_time > max_time || total_num < max_num) {
+			bool spawn_boss = true;
+			for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
+				if (intervals[it.first].nums > 0) {
+					all_clear = false;
+					if (total_time > max_time || total_num < max_num) {
+						for (auto i = 0; i < intervals[it.first].nums; i++) {
+							Spawn(it.first);
+							// UE_LOG(LogTemp, Log, TEXT("Spawn"));
 						}
+						intervals[it.first].nums = 0;
+						--intervals[it.first].times;
 					}
 				}
-				if (spawn_boss) {
-					for (auto i = 0; i < Monsters[bossType].nums; i++) {
-						UE_LOG(LogTemp, Log, TEXT("Boss"));
-						Spawn(bossType);
-					}
-					for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
-						intervals[it.first].nums = Monsters[it.first].nums;
-						intervals[it.first].times = Monsters[it.first].times;
-					}
-					max_num += 2; //For the next round, more monsters at once
-					max_time -= 2; //and less time
-					rounds--;
-				}
-				if (all_clear) {
-					for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
-						intervals[it.first].nums = Monsters[it.first].nums;
-					}
+				if (intervals[it.first].times > 0) {
+					spawn_boss = false;
 				}
 			}
-			else {
-				total_time += DeltaTime;
+			if (spawn_boss) {
+				for (auto i = 0; i < Monsters[bossType].nums; i++) {
+					UE_LOG(LogTemp, Log, TEXT("Boss"));
+					Spawn(bossType);
+				}
+				for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
+					// intervals[it.first].nums = Monsters[it.first].nums;
+					intervals[it.first].times = Monsters[it.first].times;
+				}
+				max_num += 2;
+				max_time -= 2;
+				rounds--;
+			}
+			if (all_clear) {
+				bool change_all = true;
+				for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
+					if (intervals[it.first].times > 0) {
+						intervals[it.first].nums = Monsters[it.first].nums;
+						change_all = false;
+					}
+				}
+				if (change_all) {
+					for (std::pair<const MonsterTypes, FConfigureInfo> it : intervals) {
+						intervals[it.first].nums = Monsters[it.first].nums;
+					}
+				}
 			}
 		}
 		else {
-			//TODO: next level
+			total_time += DeltaTime;
 		}
+	}
+	else {
+		//TODO: next level
+	}
+	//}
 	//}
 
 }

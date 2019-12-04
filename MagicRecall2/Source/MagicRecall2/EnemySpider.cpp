@@ -16,7 +16,6 @@
 
 int AEnemySpider::Spider_Num = 0;
 
-
 // Sets default values
 AEnemySpider::AEnemySpider()
 {
@@ -34,11 +33,14 @@ void AEnemySpider::move_Implementation()
 
 void AEnemySpider::receiveDamage_Implementation()
 {
+	mtx.lock();
 	for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
 	{
 		It->MonsterNumDecrease();
+		break;
 	}
 	Spider_Num--;
+	mtx.unlock();
 	Destroy();
 }
 
@@ -53,11 +55,6 @@ void AEnemySpider::attack_Implementation()
 		if (wizard) {
 			if (!wizard->block_attack) {
 				wizard->TakeDamage(1);
-				for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
-				{
-					It->MonsterNumDecrease();
-				}
-				this->Destroy();
 			}
 		}
 		break;

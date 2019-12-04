@@ -57,6 +57,7 @@ void AEnemyEye::move_Implementation()
 
 void AEnemyEye::receiveDamage_Implementation()
 {
+	mtx.lock();
 	for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
 	{
 		It->MonsterNumDecrease();
@@ -65,6 +66,7 @@ void AEnemyEye::receiveDamage_Implementation()
 		pro->Eye = nullptr;
 	}
 	Eye_Num--;
+	mtx.unlock();
 	Destroy();
 }
 

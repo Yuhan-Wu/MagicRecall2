@@ -13,7 +13,6 @@
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 
 int AEnemySlime::Slime_Num = 0;
-
 // Sets default values
 AEnemySlime::AEnemySlime()
 {
@@ -28,11 +27,14 @@ void AEnemySlime::move_Implementation()
 
 void AEnemySlime::receiveDamage_Implementation()
 {
+	mtx.lock();
 	for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
 	{
 		It->MonsterNumDecrease();
+		break;
 	}
 	Slime_Num--;
+	mtx.unlock();
 	Destroy();
 }
 

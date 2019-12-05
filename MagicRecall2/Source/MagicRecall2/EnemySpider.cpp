@@ -36,6 +36,7 @@ void AEnemySpider::receiveDamage_Implementation()
 	health -= 1;
 	if (health <= 0) {
 		mtx.lock();
+		Execute_dead(this);
 		for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
 		{
 			It->MonsterNumDecrease();

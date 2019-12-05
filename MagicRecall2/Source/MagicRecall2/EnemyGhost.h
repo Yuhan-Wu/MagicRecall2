@@ -40,6 +40,8 @@ public:
 
 	static int Ghost_Num;
 
+	float timeUntilCanFlip = 10.0f;
+
 	void PlaySound();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

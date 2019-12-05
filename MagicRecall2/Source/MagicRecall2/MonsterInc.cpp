@@ -184,9 +184,25 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss, FName userName) {
 	case MonsterTypes::Ghost:
 	{
 		UE_LOG(LogTemp, Log, TEXT("Ghost"));
-		FRotator rot1 = FRotator(0, 180, 0);
+		int rot = 0;
+		switch (random_loc) {
+		case 0:
+			rot = 90;
+			break;
+		case 1:
+			rot = 270;
+			break;
+		case 2:
+			rot = 180;
+			break;
+		case 3:
+			rot = 0;
+			break;
+		}
+		FRotator rot1 = FRotator(0, rot, 0);
 		// FQuat QuatRotation1 = FQuat(rot1);
 		AEnemyGhost* enemy = static_cast<AEnemyGhost*>(GetWorld()->SpawnActor(BP_Ghost, &location));
+		enemy->SetActorRotation(rot1);
 		// enemy1->AddActorLocalRotation(QuatRotation1);
 		if (AEnemyGhost::Ghost_Num == 0) {
 			enemy->PlaySound();
@@ -254,7 +270,6 @@ void AMonsterInc::ReceiveTwitchInput(FString input,FName name) {
 		}
 		twitch_intervals[type].times--;
 		if (twitch_intervals[type].times > 0) {
-			
 			twitch_intervals[type].nums = twitch_Monsters[type].nums;
 		}
 	// }

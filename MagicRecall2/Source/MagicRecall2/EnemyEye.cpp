@@ -40,6 +40,8 @@ void AEnemyEye::BeginPlay() {
 
 void AEnemyEye::Tick(float delta) {
 	Super::Tick(delta);
+	iFrameTimer -= GetWorld()->GetDeltaSeconds();
+
 	/*
 	timer += delta;
 	if (timer > 3) {
@@ -56,19 +58,23 @@ void AEnemyEye::move_Implementation()
 
 void AEnemyEye::receiveDamage_Implementation()
 {
-	health -= 1;
-	if (health <= 0) {
-		mtx.lock();
-		for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
-		{
-			It->MonsterNumDecrease();
+	if (iFrameTimer < 0) {
+		health -= 1;
+		iFrameTimer = .15;
+		if (health <= 0) {
+			mtx.lock();
+			Execute_dead(this);
+			for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
+			{
+				It->MonsterNumDecrease();
+			}
+			for (AProjectileEye* pro : bullets) {
+				pro->Eye = nullptr;
+			}
+			Eye_Num--;
+			mtx.unlock();
+			Destroy();
 		}
-		for (AProjectileEye* pro : bullets) {
-			pro->Eye = nullptr;
-		}
-		Eye_Num--;
-		mtx.unlock();
-		Destroy();
 	}
 }
 

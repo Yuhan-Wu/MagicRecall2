@@ -54,4 +54,6 @@ public:
 	virtual void BeginPlay() override;
 
 	void PlaySound();
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyEyeVar)
+	float iFrameTimer = .15f;
 };

@@ -79,7 +79,7 @@ void AProjectileEye::Tick(float DeltaTime)
 		NewLocation.Z += RotateValue.Z;
 
 		SetActorLocation(NewLocation);
-		i += .25;//.05;
+		i += .35;//.05;
 	}
 	else if (spawned) {
 		Destroy();

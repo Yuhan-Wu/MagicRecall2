@@ -40,6 +40,8 @@ public:
 	UFUNCTION(BlueprintCallable) FORCEINLINE
 		bool GetAttackingState() {return m_bAttacking;}
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName user_name;
 
 private:
 	bool m_bAttacking;

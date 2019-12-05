@@ -6,6 +6,7 @@
 #include "Components/BoxComponent.h"
 #include "ConstructorHelpers.h"
 #include <cstdlib>
+#include <string>
 
 // Sets default values
 AMonsterInc::AMonsterInc()
@@ -63,7 +64,7 @@ void AMonsterInc::Tick(float DeltaTime)
 					all_clear = false;
 					if (total_time > max_time || total_num < max_num) {
 						for (auto i = 0; i < intervals[it.first].nums; i++) {
-							Spawn(it.first);
+							Spawn(it.first,"");
 							// UE_LOG(LogTemp, Log, TEXT("Spawn"));
 						}
 						intervals[it.first].nums = 0;
@@ -139,7 +140,7 @@ void AMonsterInc::Configure() {
 	}
 }
 
-void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
+void AMonsterInc::Spawn(MonsterTypes type, bool isBoss, FName userName) {
 	total_num += 1;
 	total_time = 0;
 	int random_loc = rand() % boxes.Num();
@@ -159,12 +160,15 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
 		if (isBoss) {
 			enemy->setHealthAndShowHealthBar(3);
 		}
-		
+		enemy->user_name = userName;
 		break;
 	}
 	case MonsterTypes::Eye:
 	{
 		UE_LOG(LogTemp, Log, TEXT("Eye"));
+		if (userName != "") {
+			UE_LOG(LogTemp, Log, TEXT("Twitch"));
+		}
 		AEnemyEye* enemy = static_cast<AEnemyEye*>(GetWorld()->SpawnActor(BP_Eye, &location));
 		if (AEnemyEye::Eye_Num == 0) {
 			enemy->PlaySound();
@@ -173,6 +177,7 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
 		if (isBoss) {
 			enemy->setHealthAndShowHealthBar(3);
 		}
+		enemy->user_name = userName;
 
 		break;
 	}
@@ -196,6 +201,7 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
 		if (isBoss) {
 			enemy->setHealthAndShowHealthBar(3);
 		}
+		enemy->user_name = userName;
 		break;
 	}
 	case MonsterTypes::Slime:
@@ -214,6 +220,7 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
 		if (isBoss) {
 			enemy->setHealthAndShowHealthBar(3);
 		}
+		enemy->user_name = userName;
 		break;
 	}
 	default:
@@ -223,12 +230,12 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss) {
 }
 
 void AMonsterInc::SpawnBoss(MonsterTypes type){
-	Spawn(type, true);
+	Spawn(type, true,"");
 }
 
-void AMonsterInc::Spawn(MonsterTypes type)
+void AMonsterInc::Spawn(MonsterTypes type,FName name)
 {
-	Spawn(type, false);
+	Spawn(type, false, name);
 }
 
 void AMonsterInc::MonsterNumDecrease() {
@@ -236,12 +243,13 @@ void AMonsterInc::MonsterNumDecrease() {
 	if(total_num_of_monsters>0) total_num_of_monsters--;
 }
 
-void AMonsterInc::ReceiveTwitchInput(FString input) {
+void AMonsterInc::ReceiveTwitchInput(FString input,FName name) {
 	// UE_LOG(LogTemp, Log, TEXT("Spawn"));
 	MonsterTypes type = enum_map[input.ToUpper()];
-	if (total_num < max_num) {
+	// if (total_num < max_num) {
+	// UE_LOG(LogTemp, Log, TEXT("Name is %s"),*(name.ToString()));
 		while (twitch_intervals[type].nums > 0) {
-			Spawn(type);
+			Spawn(type,name);
 			twitch_intervals[type].nums--;
 		}
 		twitch_intervals[type].times--;
@@ -249,5 +257,5 @@ void AMonsterInc::ReceiveTwitchInput(FString input) {
 			
 			twitch_intervals[type].nums = twitch_Monsters[type].nums;
 		}
-	}
+	// }
 }

@@ -38,9 +38,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	void Spawn(MonsterTypes, bool);
+	void Spawn(MonsterTypes, bool, FName);
 	void SpawnBoss(MonsterTypes);
-	void Spawn(MonsterTypes);
+	void Spawn(MonsterTypes,FName);
 
 	std::map<MonsterTypes,FConfigureInfo> Monsters;
 	std::map<MonsterTypes, FConfigureInfo> twitch_Monsters;
@@ -86,7 +86,7 @@ public:
 	void MonsterNumDecrease();
 
 	UFUNCTION(BlueprintCallable)
-	void ReceiveTwitchInput(FString input);
+	void ReceiveTwitchInput(FString input,FName user_name);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	int total_num_of_monsters;

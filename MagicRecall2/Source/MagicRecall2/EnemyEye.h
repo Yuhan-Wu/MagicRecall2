@@ -23,6 +23,9 @@ public:
 
 	static int Eye_Num;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName user_name;
+
 protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)

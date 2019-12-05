@@ -41,4 +41,7 @@ public:
 	static int Ghost_Num;
 
 	void PlaySound();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName user_name;
 };

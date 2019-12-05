@@ -62,6 +62,7 @@ void AEnemyEye::receiveDamage_Implementation()
 		iFrameTimer = .1;
 		if (health <= 0) {
 			mtx.lock();
+			Execute_dead();
 			for (TActorIterator<AMonsterInc> It(GetWorld()); It; ++It)
 			{
 				It->MonsterNumDecrease();

@@ -74,8 +74,13 @@ void AEnemyEye::receiveDamage_Implementation()
 			mtx.unlock();
 			Destroy();
 		}
+		for (AProjectileEye* pro : bullets) {
+			pro->Eye = nullptr;
+		}
+		Eye_Num--;
+		mtx.unlock();
+		Destroy();
 	}
-	
 }
 
 void AEnemyEye::attack_Implementation()

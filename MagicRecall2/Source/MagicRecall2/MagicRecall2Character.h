@@ -49,6 +49,9 @@ public:
 	UFUNCTION(BlueprintCallable) FORCEINLINE
 		bool GetHittingState() { return block_attack; }
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+		void PlayerTakeDamage();
+
 protected:
 
 	/** Resets HMD orientation in VR. */

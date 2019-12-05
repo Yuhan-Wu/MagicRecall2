@@ -22,7 +22,7 @@ int AEnemyGhost::Ghost_Num = 0;
 // Sets default values
 AEnemyGhost::AEnemyGhost()
 {
-	
+	user_name = " ";
 }
 
 void AEnemyGhost::BeginPlay() {

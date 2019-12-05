@@ -38,5 +38,5 @@ public:
 	void PlaySound();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FName user_name;
+		FName user_name="";
 };

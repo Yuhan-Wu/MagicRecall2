@@ -17,6 +17,7 @@ ABonfire::ABonfire()
 	CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Bonfire"));
 
 	RootComponent = CollisionComponent;
+	user_name = " ";
 }
 
 // Called when the game starts or when spawned

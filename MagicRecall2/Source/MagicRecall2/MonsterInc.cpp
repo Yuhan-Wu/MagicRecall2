@@ -64,7 +64,7 @@ void AMonsterInc::Tick(float DeltaTime)
 					all_clear = false;
 					if (total_time > max_time || total_num < max_num) {
 						for (auto i = 0; i < intervals[it.first].nums; i++) {
-							Spawn(it.first,"");
+							Spawn(it.first," ");
 							// UE_LOG(LogTemp, Log, TEXT("Spawn"));
 						}
 						intervals[it.first].nums = 0;
@@ -246,7 +246,7 @@ void AMonsterInc::Spawn(MonsterTypes type, bool isBoss, FName userName) {
 }
 
 void AMonsterInc::SpawnBoss(MonsterTypes type){
-	Spawn(type, true,"");
+	Spawn(type, true," ");
 }
 
 void AMonsterInc::Spawn(MonsterTypes type,FName name)

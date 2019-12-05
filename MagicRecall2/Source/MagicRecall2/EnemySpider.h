@@ -42,7 +42,7 @@ public:
 		bool GetAttackingState() {return m_bAttacking;}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FName user_name;
+		FName user_name="";
 
 private:
 	bool m_bAttacking;

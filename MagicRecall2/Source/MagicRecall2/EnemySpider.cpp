@@ -19,7 +19,7 @@ int AEnemySpider::Spider_Num = 0;
 // Sets default values
 AEnemySpider::AEnemySpider()
 {
-
+	user_name = " ";
 }
 
 void AEnemySpider::move_Implementation()

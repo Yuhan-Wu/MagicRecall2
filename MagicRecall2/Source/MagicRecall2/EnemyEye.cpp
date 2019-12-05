@@ -30,6 +30,7 @@ AEnemyEye::AEnemyEye()
 	*/
 	timer = 0;
 	Eye_Num++;
+	user_name = " ";
 }
 
 void AEnemyEye::BeginPlay() {

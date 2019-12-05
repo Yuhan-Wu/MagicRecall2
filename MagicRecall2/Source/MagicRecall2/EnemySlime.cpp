@@ -16,7 +16,7 @@ int AEnemySlime::Slime_Num = 0;
 // Sets default values
 AEnemySlime::AEnemySlime()
 {
- 	
+	user_name = " ";
 
 }
 

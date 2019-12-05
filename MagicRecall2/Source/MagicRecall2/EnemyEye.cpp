@@ -40,6 +40,8 @@ void AEnemyEye::BeginPlay() {
 
 void AEnemyEye::Tick(float delta) {
 	Super::Tick(delta);
+	iFrameTimer -= GetWorld()->GetDeltaSeconds();
+
 	/*
 	timer += delta;
 	if (timer > 3) {
@@ -56,10 +58,9 @@ void AEnemyEye::move_Implementation()
 
 void AEnemyEye::receiveDamage_Implementation()
 {
-	iFrameTimer -= GetWorld()->GetDeltaSeconds();
 	if (iFrameTimer < 0) {
 		health -= 1;
-		iFrameTimer = .1;
+		iFrameTimer = .15;
 		if (health <= 0) {
 			mtx.lock();
 			Execute_dead(this);
@@ -74,12 +75,6 @@ void AEnemyEye::receiveDamage_Implementation()
 			mtx.unlock();
 			Destroy();
 		}
-		for (AProjectileEye* pro : bullets) {
-			pro->Eye = nullptr;
-		}
-		Eye_Num--;
-		mtx.unlock();
-		Destroy();
 	}
 }
 

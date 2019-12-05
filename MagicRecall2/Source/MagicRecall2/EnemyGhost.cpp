@@ -12,14 +12,17 @@
 #include "ProjectileGhost.h"
 #include "MonsterInc.h"
 #include "Engine.h"
+#include "Misc/App.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
+
+
 
 int AEnemyGhost::Ghost_Num = 0;
 
 // Sets default values
 AEnemyGhost::AEnemyGhost()
 {
-
+	
 }
 
 void AEnemyGhost::BeginPlay() {
@@ -29,7 +32,15 @@ void AEnemyGhost::BeginPlay() {
 
 void AEnemyGhost::move_Implementation()
 {
-	
+	timeUntilCanFlip -= GetWorld()->GetDeltaSeconds();
+	if (((GetActorLocation().X > 630 || GetActorLocation().X < -2050) || (GetActorLocation().Y > 4320 || GetActorLocation().Y < -1130)) && timeUntilCanFlip < 0) { //up down flip
+		UE_LOG(LogTemp, Log, TEXT("Flip"));
+		SetActorRotation(FRotator(GetActorRotation().Pitch,((int)GetActorRotation().Yaw + 180)%360,GetActorRotation().Roll));
+		timeUntilCanFlip = 10;
+	}
+
+	SetActorLocation(GetActorLocation() + (GetActorForwardVector() * 2.5), true);
+	//AddActorWorldRotation(180);
 }
 
 void AEnemyGhost::receiveDamage_Implementation()

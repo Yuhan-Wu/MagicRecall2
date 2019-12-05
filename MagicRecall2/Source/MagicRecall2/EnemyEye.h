@@ -55,5 +55,5 @@ public:
 
 	void PlaySound();
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyEyeVar)
-	float iFrameTimer = .15f;
+	float iFrameTimer = .2f;
 };

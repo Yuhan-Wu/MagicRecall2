@@ -61,7 +61,7 @@ void AEnemyEye::receiveDamage_Implementation()
 {
 	if (iFrameTimer < 0) {
 		health -= 1;
-		iFrameTimer = .15;
+		iFrameTimer = .2;
 		if (health <= 0) {
 			mtx.lock();
 			Execute_dead(this);

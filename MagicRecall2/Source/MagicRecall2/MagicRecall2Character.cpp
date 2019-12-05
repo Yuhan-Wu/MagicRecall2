@@ -206,7 +206,10 @@ void AMagicRecall2Character::Mahou() {
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = Instigator;
-			
+			int tempLevel = level;
+			if (level > 3) {
+				level = 3;
+			}
 			for (auto i = 0; i < FireballLevel[level]; i++) {
 				AFireBall* Projectile = World->SpawnActor< AFireBall >(Fireballs, MuzzleLocation, MuzzleRotation, SpawnParams);
 				Projectile->SetDistance(DistanceLevel[level]);
@@ -223,6 +226,7 @@ void AMagicRecall2Character::Mahou() {
 					// UE_LOG(LogTemp, Log, TEXT("Born"));
 				}
 			}
+			level = tempLevel;
 			AudioComponent->Play();
 		}
 	}

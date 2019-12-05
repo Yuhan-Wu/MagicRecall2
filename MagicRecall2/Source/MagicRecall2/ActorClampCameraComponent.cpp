@@ -49,7 +49,6 @@ void UActorClampCameraComponent::TickComponent(float DeltaTime, ELevelTick TickT
 			if (playerPositionResult.W == 0.f) {playerPositionResult.W = 1.f;}
 			projected = FVector(playerPositionResult.X, playerPositionResult.Y, playerPositionResult.Z) / FMath::Abs(playerPositionResult.W);
 			normalizedScreenPosition = FVector2D(projected.X, projected.Y);
-			UE_LOG(LogTemp, Warning, TEXT("%s"), *normalizedScreenPosition.ToString());
 			if (FMath::Abs(projected.X) > ClampRate || FMath::Abs(projected.Y) > ClampRate){
 				// Move Camera
 				FVector cameraOffset = FVector(0.f);

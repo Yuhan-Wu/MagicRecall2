@@ -17,6 +17,8 @@ UINTERFACE(MinimalAPI)
 class UEnemy : public UInterface
 {
 	GENERATED_BODY()
+
+
 };
 
 /**
@@ -28,6 +30,7 @@ class MAGICRECALL2_API IEnemy
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+
 	int health = 1;
 	bool showHealthBar = false;
 
@@ -37,6 +40,9 @@ public:
 		void receiveDamage();
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
 		void attack();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "EnemyInterface")
+		void dead();
 
 	void setMoveTarget(AActor * i_moveTarget) { moveTarget = i_moveTarget; }
 	AActor * const getMoveTarget() { return moveTarget; }

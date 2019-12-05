@@ -15,6 +15,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -234,7 +235,7 @@ void AMagicRecall2Character::Mahou() {
 }
 
 int AMagicRecall2Character::PowerUp() {
-	if (level < DistanceLevel.size()) {
+	if ((size_t)level < DistanceLevel.size()) {
 		level++;
 	}
 	return level;

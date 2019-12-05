@@ -56,6 +56,7 @@ void ABonfire::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 				if (wizard) {
 					wizard->BackToMuggle();
 					particles->DeactivateSystem();
+					user_name = " ";
 				}
 			}
 		}

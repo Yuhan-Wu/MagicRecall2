@@ -269,7 +269,7 @@ void AMagicRecall2Character::OnOverlap(UPrimitiveComponent* OverlappedComp, AAct
 			// UE_LOG(LogTemp, Log, TEXT("yup"));
 			TakeDamage(1);
 			IEnemy* enemy = Cast<IEnemy>(OtherActor);
-			enemy->receiveDamage();
+			enemy->receiveDamage_Implementation();
 		}
 	}
 	else if (OtherActor != this && Cast<AFireBall>(OtherActor)) {

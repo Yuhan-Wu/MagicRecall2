@@ -247,6 +247,7 @@ int AMagicRecall2Character::BackToMuggle() {
 void AMagicRecall2Character::TakeDamage(int damage) {
 	mtx.lock();
 	if (!block_attack) {
+		PlayerTakeDamage();
 		hp -= damage;
 		if (hp <= 0) {
 			FLatentActionInfo LatentInfo;

@@ -23,6 +23,9 @@ public:
 
 	static int Eye_Num;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName user_name;
+
 protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
@@ -51,5 +54,6 @@ public:
 	virtual void BeginPlay() override;
 
 	void PlaySound();
-	float iFrameTimer = .1f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = EnemyEyeVar)
+	float iFrameTimer = .15f;
 };

@@ -36,4 +36,7 @@ public:
 	static int Slime_Num;
 
 	void PlaySound();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName user_name;
 };

@@ -43,4 +43,7 @@ public:
 	float timeUntilCanFlip = 10.0f;
 
 	void PlaySound();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName user_name;
 };

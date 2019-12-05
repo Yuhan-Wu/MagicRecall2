@@ -61,10 +61,11 @@ void ABonfire::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 	}
 }
 
-void ABonfire::ReceiveTwitchInput(AMagicRecall2Character* wizard) {
+void ABonfire::ReceiveTwitchInput(AMagicRecall2Character* wizard,FName username) {
 	// UE_LOG(LogTemp, Log, TEXT("POWERUP"));
 	if (!isLit) {
 		isLit = true;
+		user_name = username;
 		wizard->PowerUp();
 		particles->ActivateSystem();
 	}

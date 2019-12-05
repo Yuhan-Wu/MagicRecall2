@@ -37,6 +37,9 @@ public:
 	UBoxComponent* CollisionComponent;
 
 	UFUNCTION(BlueprintCallable)
-	void ReceiveTwitchInput(AMagicRecall2Character* player);
+	void ReceiveTwitchInput(AMagicRecall2Character* player,FName userName);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName user_name;
 
 };

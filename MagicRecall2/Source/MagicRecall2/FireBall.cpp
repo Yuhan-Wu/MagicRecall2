@@ -16,7 +16,7 @@ AFireBall::AFireBall()
 	PrimaryActorTick.bCanEverTick = true;
 
 	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
-	CollisionComponent->InitSphereRadius(15.0f);
+	CollisionComponent->InitSphereRadius(35.0f);
 	CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Fireball_Attack"));
 	
 	RootComponent = CollisionComponent;

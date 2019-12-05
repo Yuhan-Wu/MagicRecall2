@@ -51,4 +51,5 @@ public:
 	virtual void BeginPlay() override;
 
 	void PlaySound();
+	float iFrameTimer = .1f;
 };
